@@ -1,12 +1,8 @@
 import React from 'react'
-import HPBucket from './HPBucket'
-import MitHeal from './MitHeal'
+import Timeline from './Timeline'
 
 export default function App() {
   return (
-    <div>App
-        <div><HPBucket/></div> 
-        <div><MitHeal/></div> 
-    </div>
+    <Timeline/>
   )
 }
