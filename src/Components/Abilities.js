@@ -2,7 +2,7 @@ import React from 'react'
 
 //REMEMBER. ABILITIES IS -ALL- SOURCES OF MIT AND HEALING A SECOND.
 
-export default function Abilities({id}) {
+const Abilities = ({id}) => {
   const [checked, setChecked] = React.useState(false);
 
   const handleChange = () => {
@@ -22,3 +22,5 @@ export default function Abilities({id}) {
   </span>
   )
 }
+
+export default Abilities;

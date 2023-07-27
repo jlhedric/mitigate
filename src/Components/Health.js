@@ -1,9 +1,15 @@
 import React from 'react'
 import Values from './Values'
 
-export default function Health({id, partyHp}) {
-  const partyListItems = Object.keys(partyHp).map(player => <li key={`second-${id}-${player}`}> Second {id+1} {player} HP: {partyHp[player]}</li>)
+const Health = ({id, partyHp}) => {
+  const players = Object.keys(partyHp)
+  const partyListItems = players.map(player => <li key={`second-${id}-${player}`}> Second {id+1} {player} HP: {partyHp[player]}</li>)
     return (
-      <ul>{partyListItems}</ul>
+      <span>
+        <ul>{partyListItems}</ul>
+        <Values id={id}></Values>
+      </span>
     )
   }
+
+export default Health;

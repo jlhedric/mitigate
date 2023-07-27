@@ -1,8 +1,10 @@
 import React from 'react'
 // REMEMBER. DAMAGE IS -ALL- SOURCES OF DAMAGE A SECOND. 
 
-export default function Damage({id}) {
+const Damage = ({id}) => {
   return (
-    <span>Damage {id+1} &nbsp;</span>
+    <span>Sec {id+1} &nbsp;</span>
   )
 }
+
+export default Damage;

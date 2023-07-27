@@ -19,7 +19,7 @@ import HpBucket from './HpBucket'
 //   return new Promise(resolve => setTimeout(resolve, ms));
 // }
 
-export default function Timeline() {
+const Timeline = () => {
   const [fightDuration, setFightDuration] = useState(3)
 
   const hpJson = {}
@@ -39,20 +39,24 @@ export default function Timeline() {
   
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formJson = Object.fromEntries(new FormData(e.target).entries());
-    setFightDuration(formJson['durationInSeconds'])
+    const value =  Number(Object.fromEntries(new FormData(e.target).entries())['durationInSeconds'])
+    if(!isNaN(value) && value > 0){
+      setFightDuration(value)
+    }
   };
+
+  const childrenAmount = Array(fightDuration).fill(1)
 
   return ( 
     <div>
-      {/* TODO: move to child component <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <label>Fight Duration In Seconds: </label>
         <input 
           name="durationInSeconds"
           placeholder='Fight duration in seconds'/>
         <button type='submit'>Submit</button>
-      </form> */}
-      {Array(fightDuration).fill(1).map((_, index) => (<Damage key={index} id={index}/>))}
+      </form>
+      {childrenAmount.map((_, index) => (<Damage key={index} id={index}/>))}
       <br/>
       <AbilitiesBucket fightDuration={fightDuration}/>
       <br/>
@@ -60,3 +64,5 @@ export default function Timeline() {
     </div>
   )
 }
+
+export default Timeline;

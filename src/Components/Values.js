@@ -1,7 +1,9 @@
 import React from 'react'
 
-export default function Values() {
+const Values = ({id}) => {
   return (
-    <span>Values</span>
+    <span>Specific {`Second ${id+1} `}Healing and Mitigation Values ... ... ...</span>
   )
 }
+
+export default Values;
