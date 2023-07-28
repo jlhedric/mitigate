@@ -1,7 +1,8 @@
 import React from 'react'
 import Values from './Values'
 
-const Health = ({id, partyHp}) => {
+const Health = ({id, partyHp, partyHpChange, partyAbilities}) => {
+  //calculations need to have happened before these render
   const players = Object.keys(partyHp)
   const partyListItems = players.map(player => <li key={`second-${id}-${player}`}> Second {id+1} {player} HP: {partyHp[player]}</li>)
     return (

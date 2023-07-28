@@ -23,25 +23,24 @@ const Timeline = () => {
   const [fightDuration, setFightDuration] = useState(3)
 
   const hpJson = {}
+  const dmgJson = {}
+  const abilitiesJson = {}
+
   for (var i = 0; i < fightDuration; i++) {
     hpJson[i] = {'Player1': 30, 'Player2': 10}
+    dmgJson[i] = {'Player1':1, 'Player2':0}
+    abilitiesJson[i]= {'Player1':[{'Mit':[], 'Heal': 0}], 'Player2':[{'Mit':[], 'Heal':0}]}
+    
   }
   const [hpCollection, setHpCollection] = useState(hpJson)
-  const [damageCollection, setDamageCollection] = useState({
-    'Player1': [0, -10, -10],
-    'Player2': [0, -2, -2]
-  })
-  const [abilityCollection, setAbilityCollection] = useState({
-    // 10% mit to P1 at sec 2 and 3
-    'Player1':[{'Mit':[0, 0, 0], 'Heal': [0,0,0] }, {'Mit':[0, 0.1, 0.1], 'Heal': [0,0,0] }, {'Mit':[0, 0.1, 0.1], 'Heal': [0,0,0] }],
-    'Player2':[{'Mit':[0, 0, 0], 'Heal': [0,0,0] }, {'Mit':[0, 0, 0], 'Heal': [0,0,0] }, {'Mit':[0, 0, 0], 'Heal': [0,0,0] }]
-  })
+  const [damageCollection, setDamageCollection] = useState(dmgJson)
+  const [abilityCollection, setAbilityCollection] = useState(abilitiesJson)
   
   const handleSubmit = (e) => {
     e.preventDefault();
     const value =  Number(Object.fromEntries(new FormData(e.target).entries())['durationInSeconds'])
     if(!isNaN(value) && value > 0){
-      setFightDuration(value)
+      setFightDuration(Math.floor(value))
     }
   };
 
