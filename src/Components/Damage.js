@@ -1,20 +1,19 @@
 import React, {useState} from 'react'
 // REMEMBER. DAMAGE IS -ALL- SOURCES OF DAMAGE A SECOND. 
 
-const Damage = ({id, damageCollection, onSubmit}) => {
-  const [damageThisSecond, setDamageThisSecond] = useState("");
-
+const Damage = ({id, damageAtSec, onSubmit}) => {
+  const [damageThisSecond, setDamageThisSecond] = useState({});
 
 
   return (
     <React.Fragment>
       <span>Sec {id+1} &nbsp;</span>
-      <form>
+      <form onSubmit={onSubmit} id={id}>
         <label>Damage </label>
         <input 
-          name={`DamageAtSec${id+1}`}
+          name={`AddDamageAtSec${id+1}`}
           placeholder='Raw damage'/>
-        <button type='submit'>Submit</button>
+        <button type='submit'>Add Damage</button>
       </form>
     </React.Fragment>
   )

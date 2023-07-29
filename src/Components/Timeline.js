@@ -3,38 +3,21 @@ import AbilitiesBucket from './AbilitiesBucket'
 import Damage from './Damage'
 import HpBucket from './HpBucket'
 
-// //https://stackoverflow.com/questions/60657796/prevent-multiple-form-submissions-in-reactjs
-// const useCallbackOnce = (cb) => {
-//     const [called, setCalled] = useState(false);
-//     // Below can be wrapped in useCallback whenever re-renders becomes a problem
-//     return (e) => {
-//         if (!called) {
-//             setCalled(true);
-//             cb(e);
-//         }
-//     }
-// }
-
-// function sleep(ms) {
-//   return new Promise(resolve => setTimeout(resolve, ms));
-// }
+const tempDefaultHpJson = {'Player1': 1500, 'Player2': 10, 'Player3': 10, 'Player4': 10, 'Player5': 10, 'Player6': 10, 'Player7': 10, 'Player8': 10}
+const tempDefaultDamageJson = {'Player1':2, 'Player2':0, 'Player3': 0, 'Player4': 0, 'Player5': 0, 'Player6': 0, 'Player7': 0, 'Player8': 0}
 
 const Timeline = () => {
-  const [fightState, setFightState] = useState(
-    {'fightDuration': 3, 
+  const [fightState, setFightState] = useState({
+    'fightDuration': 3, 
     'hpCollection': {
-      0:{
-        'Player1': 1500, 'Player2': 10, 'Player3': 10, 'Player4': 10, 'Player5': 10, 'Player6': 10, 'Player7': 10, 'Player8': 10
-      }, 1:{
-        'Player1': 1500, 'Player2': 10, 'Player3': 10, 'Player4': 10, 'Player5': 10, 'Player6': 10, 'Player7': 10, 'Player8': 10
-      }, 2:{
-        'Player1': 1500, 'Player2': 10, 'Player3': 10, 'Player4': 10, 'Player5': 10, 'Player6': 10, 'Player7': 10, 'Player8': 10
-      }
+      0: tempDefaultHpJson, 
+      1: tempDefaultHpJson, 
+      2: tempDefaultHpJson
     },
     'damageCollection': {
-      0:{'Player1':2, 'Player2':0, 'Player3': 0, 'Player4': 0, 'Player5': 0, 'Player6': 0, 'Player7': 0, 'Player8': 0},
-      1:{'Player1':2, 'Player2':0, 'Player3': 0, 'Player4': 0, 'Player5': 0, 'Player6': 0, 'Player7': 0, 'Player8': 0},
-      2:{'Player1':2, 'Player2':0, 'Player3': 0, 'Player4': 0, 'Player5': 0, 'Player6': 0, 'Player7': 0, 'Player8': 0}
+      0: tempDefaultDamageJson,
+      1: tempDefaultDamageJson,
+      2: tempDefaultDamageJson
     }
   })
 
@@ -53,12 +36,39 @@ const Timeline = () => {
       const hpCollection = {}
       const damageCollection = {}
       for (var i = 0; i < duration; i++) {
-        hpCollection[i] = {'Player1': 1500, 'Player2': 10, 'Player3': 10, 'Player4': 10, 'Player5': 10, 'Player6': 10, 'Player7': 10, 'Player8': 10}
-        damageCollection[i] = {'Player1':2, 'Player2':0, 'Player3': 0, 'Player4': 0, 'Player5': 0, 'Player6': 0, 'Player7': 0, 'Player8': 0}
+        hpCollection[i] = tempDefaultHpJson
+        damageCollection[i] = tempDefaultDamageJson
       }
       setFightState({'fightDuration': duration, 'hpCollection': hpCollection, 'damageCollection': damageCollection})
     }
-  };
+};
+  // TODO: Apply damage to specific targets
+  const handleAddDamageSubmit = (e) => {
+    e.preventDefault();
+    const index = Number(e.target.id)
+    let newDamage =  Number(Object.fromEntries(new FormData(e.target).entries())['AddDamageAtSec'+(index+1)])   //seconds are 1 indexed
+    if(!isNaN(newDamage) && newDamage > 0){
+      newDamage = Math.floor(newDamage)
+      setFightState(prevState => ({
+        ...prevState,
+        damageCollection: {
+          ...prevState.damageCollection,
+          [index]: {
+            'Player1': prevState.damageCollection[index].Player1 + newDamage,
+            'Player2': prevState.damageCollection[index].Player2 + newDamage,
+            'Player3': prevState.damageCollection[index].Player3 + newDamage,
+            'Player4': prevState.damageCollection[index].Player4 + newDamage,
+            'Player5': prevState.damageCollection[index].Player5 + newDamage,
+            'Player6': prevState.damageCollection[index].Player6 + newDamage,
+            'Player7': prevState.damageCollection[index].Player7 + newDamage,
+            'Player8': prevState.damageCollection[index].Player8 + newDamage
+          }
+        }
+
+      }))
+    }
+
+  }
 
   const childrenAmount = Array(fightState['fightDuration']).fill(1)
 
@@ -71,7 +81,13 @@ const Timeline = () => {
           placeholder='Fight duration in seconds'/>
         <button type='submit'>Submit</button>
       </form>
-      {childrenAmount.map((_, index) => (<Damage key={index} id={index} damageCollection={fightState['damageCollection'][index]} />))}
+      {childrenAmount.map((_, index) => (
+        <Damage 
+          key={index} 
+          id={index} 
+          damageAtSec={fightState['damageCollection'][index]} 
+          onSubmit={handleAddDamageSubmit}
+        />))}
       <br/>
       <br/>
       <AbilitiesBucket fightDuration={fightState['fightDuration']}/>
