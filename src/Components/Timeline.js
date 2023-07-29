@@ -20,46 +20,63 @@ import HpBucket from './HpBucket'
 // }
 
 const Timeline = () => {
-  const [fightDuration, setFightDuration] = useState(3)
+  const [fightState, setFightState] = useState(
+    {'fightDuration': 3, 
+    'hpCollection': {
+      0:{
+        'Player1': 1500, 'Player2': 10, 'Player3': 10, 'Player4': 10, 'Player5': 10, 'Player6': 10, 'Player7': 10, 'Player8': 10
+      }, 1:{
+        'Player1': 1500, 'Player2': 10, 'Player3': 10, 'Player4': 10, 'Player5': 10, 'Player6': 10, 'Player7': 10, 'Player8': 10
+      }, 2:{
+        'Player1': 1500, 'Player2': 10, 'Player3': 10, 'Player4': 10, 'Player5': 10, 'Player6': 10, 'Player7': 10, 'Player8': 10
+      }
+    },
+    'damageCollection': {
+      0:{'Player1':2, 'Player2':0, 'Player3': 0, 'Player4': 0, 'Player5': 0, 'Player6': 0, 'Player7': 0, 'Player8': 0},
+      1:{'Player1':2, 'Player2':0, 'Player3': 0, 'Player4': 0, 'Player5': 0, 'Player6': 0, 'Player7': 0, 'Player8': 0},
+      2:{'Player1':2, 'Player2':0, 'Player3': 0, 'Player4': 0, 'Player5': 0, 'Player6': 0, 'Player7': 0, 'Player8': 0}
+    }
+  })
 
-  const hpJson = {}
-  const dmgJson = {}
   const abilitiesJson = {}
 
-  for (var i = 0; i < fightDuration; i++) {
-    hpJson[i] = {'Player1': 30, 'Player2': 10}
-    dmgJson[i] = {'Player1':1, 'Player2':0}
+  for (var i = 0; i < fightState['fightDuration']; i++) {
     abilitiesJson[i]= {'Player1':[{'Mit':[], 'Heal': 0}], 'Player2':[{'Mit':[], 'Heal':0}]}
-    
   }
-  const [hpCollection, setHpCollection] = useState(hpJson)
-  const [damageCollection, setDamageCollection] = useState(dmgJson)
   const [abilityCollection, setAbilityCollection] = useState(abilitiesJson)
   
-  const handleSubmit = (e) => {
+  const handleDurationSubmit = (e) => {
     e.preventDefault();
-    const value =  Number(Object.fromEntries(new FormData(e.target).entries())['durationInSeconds'])
-    if(!isNaN(value) && value > 0){
-      setFightDuration(Math.floor(value))
+    let duration =  Number(Object.fromEntries(new FormData(e.target).entries())['durationInSeconds'])
+    if(!isNaN(duration) && duration > 0){
+      duration = Math.floor(duration)
+      const hpCollection = {}
+      const damageCollection = {}
+      for (var i = 0; i < duration; i++) {
+        hpCollection[i] = {'Player1': 1500, 'Player2': 10, 'Player3': 10, 'Player4': 10, 'Player5': 10, 'Player6': 10, 'Player7': 10, 'Player8': 10}
+        damageCollection[i] = {'Player1':2, 'Player2':0, 'Player3': 0, 'Player4': 0, 'Player5': 0, 'Player6': 0, 'Player7': 0, 'Player8': 0}
+      }
+      setFightState({'fightDuration': duration, 'hpCollection': hpCollection, 'damageCollection': damageCollection})
     }
   };
 
-  const childrenAmount = Array(fightDuration).fill(1)
+  const childrenAmount = Array(fightState['fightDuration']).fill(1)
 
   return ( 
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleDurationSubmit}>
         <label>Fight Duration In Seconds: </label>
         <input 
           name="durationInSeconds"
           placeholder='Fight duration in seconds'/>
         <button type='submit'>Submit</button>
       </form>
-      {childrenAmount.map((_, index) => (<Damage key={index} id={index}/>))}
+      {childrenAmount.map((_, index) => (<Damage key={index} id={index} damageCollection={fightState['damageCollection'][index]} />))}
       <br/>
-      <AbilitiesBucket fightDuration={fightDuration}/>
       <br/>
-      <HpBucket fightDuration={fightDuration} hpCollection={hpCollection} damageCollection={damageCollection} abilityCollection={abilityCollection}/>
+      <AbilitiesBucket fightDuration={fightState['fightDuration']}/>
+      <br/>
+      <HpBucket fightState={fightState}/>
     </div>
   )
 }
