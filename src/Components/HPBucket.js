@@ -21,7 +21,7 @@ const HpBucket = ({fightState}) => {
           totalDamagePerSec += damage.amount
         }
       }
-      if (second == 0) {
+      if (second === 0) {
         finalHpCollection[second]['Player'+i] = hpCollection[second]['Player'+i] - totalDamagePerSec
       } else {
         finalHpCollection[second]['Player'+i] = finalHpCollection[second-1]['Player'+i] - totalDamagePerSec
