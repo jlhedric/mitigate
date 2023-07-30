@@ -1,10 +1,13 @@
 import React, {useState} from 'react'
+import {DAMAGE_TYPES} from '../data'
 import AbilitiesBucket from './AbilitiesBucket'
 import Damage from './Damage'
 import HpBucket from './HpBucket'
 
+const tempDefaultAttack = {'amount': 2, 'type': 'physical', 'isDotTick': false, 'isTargetable': false}
+const tempNoAttack = {'amount': 0, 'type': 'physical', 'isDotTick': false, 'isTargetable': false}
 const tempDefaultHpJson = {'Player1': 1500, 'Player2': 10, 'Player3': 10, 'Player4': 10, 'Player5': 10, 'Player6': 10, 'Player7': 10, 'Player8': 10}
-const tempDefaultDamageJson = {'Player1':2, 'Player2':0, 'Player3': 0, 'Player4': 0, 'Player5': 0, 'Player6': 0, 'Player7': 0, 'Player8': 0}
+const tempDefaultDamageJson = {'Player1': [tempDefaultAttack], 'Player2':[tempNoAttack], 'Player3': [tempNoAttack], 'Player4': [tempNoAttack], 'Player5': [tempNoAttack], 'Player6': [tempNoAttack], 'Player7': [tempNoAttack], 'Player8': [tempNoAttack]}
 
 const Timeline = () => {
   const [fightState, setFightState] = useState({

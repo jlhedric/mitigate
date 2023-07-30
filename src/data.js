@@ -1,4 +1,4 @@
-{
+const JOBS = {
   "pld":{},
   "war":{},
   "drk":{},
@@ -19,16 +19,15 @@
   "dnc":{}
 }
 
-{
-  "mitigation":,
-  "heal":,
-  "target":,
-  "delay":,
-  "duration":,
-  "cooldown":,
-  "stacks":,
-  "buffs_gcd_heals":,
-  "buffs_heals_received":
+const test = {
+  "mitigation":'',
+  "heal":'',
+  "target":'',
+  "delay":'',
+  "duration":'',
+  "cooldown":'',
+  "stacks":'',
+  "buffs_gcd_heals":'',
+  "buffs_heals_received":''
 }
-
 
