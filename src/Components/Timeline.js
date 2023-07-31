@@ -3,9 +3,11 @@ import AbilitiesBucket from './AbilitiesBucket'
 import Damage from './Damage'
 import HpBucket from './HpBucket'
 
-const tempDefaultAttack = {'name': 'demoAttack', 'amount': 2, 'type': 'physical', 'isDotTick': false, 'isTargetable': false}
+const tempDefaultAttack = {'name': 'demoAttack', 'amount': 2, 'type': 'physical', 'isDotTick': false, 'isTargetable': false, 'id': 123}
+const tempSecondDefaultAttack = {'name': 'demoAttack2', 'amount': 3, 'type': 'physical', 'isDotTick': false, 'isTargetable': false, 'id': 456}
+
 const tempDefaultHpJson = {'Player1': 1500, 'Player2': 10, 'Player3': 10, 'Player4': 10, 'Player5': 10, 'Player6': 10, 'Player7': 10, 'Player8': 10}
-const tempDefaultDamageJson = {'Player1': [tempDefaultAttack, tempDefaultAttack], 'Player2':[tempDefaultAttack], 'Player3': [], 'Player4': [], 'Player5': [], 'Player6': [], 'Player7': [], 'Player8': []}
+const tempDefaultDamageJson = {'Player1': [tempDefaultAttack, tempSecondDefaultAttack], 'Player2':[tempDefaultAttack], 'Player3': [tempSecondDefaultAttack], 'Player4': [], 'Player5': [], 'Player6': [], 'Player7': [], 'Player8': []}
 
 const Timeline = () => {
   const [fightState, setFightState] = useState({
@@ -48,7 +50,6 @@ const Timeline = () => {
     e.preventDefault();
     const index = Number(e.target.id)
     const damageFormInput = Object.fromEntries(new FormData(e.target).entries())
-    const {type} = damageFormInput
     let newDamage =  Number(damageFormInput.amount)
     if(!isNaN(newDamage) && newDamage > 0){
       newDamage = Math.floor(newDamage)
@@ -56,9 +57,10 @@ const Timeline = () => {
       const newDamageObj = {
         'name': damageFormInput.name ? damageFormInput.name : `DefaultNameSec${index+1}_${Date.now()}`,
         'amount': newDamage,
-        type, 
+        'type': damageFormInput.type, 
         'isDotTick': 'isDotTick' in damageFormInput, 
-        'isTargetable': 'isTargetable' in damageFormInput
+        'isTargetable': 'isTargetable' in damageFormInput,
+        'id': Date.now()
       }
     
       setFightState(prevState => ({
@@ -96,7 +98,7 @@ const Timeline = () => {
         <Damage 
           key={index} 
           id={index} 
-          damageAtSec={fightState['damageCollection'][index]} 
+          damagesAtSec={fightState['damageCollection'][index]} 
           onSubmit={handleAddDamageSubmit}
         />))}
       <br/>
