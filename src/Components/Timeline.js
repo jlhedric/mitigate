@@ -41,6 +41,7 @@ const Timeline = () => {
       for (var i = 0; i < duration; i++) {
         hpCollection[i] = tempDefaultHpJson
         damageCollection[i] = tempDefaultDamageJson
+        //damageCollection[i] = {'Player1': [], 'Player2': [], 'Player3': [], 'Player4': [], 'Player5': [], 'Player6': [], 'Player7': [], 'Player8': []}
       }
       setFightState({'fightDuration': duration, 'hpCollection': hpCollection, 'damageCollection': damageCollection})
     }

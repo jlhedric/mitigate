@@ -14,7 +14,7 @@ const Damage = ({id, damagesAtSec, onSubmit}) => {
     }
   }
 
-  const listDamages = Array.from(damageList).map(damage => <li>{damage.name}</li>);
+  const listDamages = Array.from(damageList).map(damage => <li>{[damage.name,' ', '-', damage.amount, ' hp']}</li>);
   return (
     <React.Fragment>
       <span>Sec {id+1} &nbsp;</span>

@@ -1,0 +1,323 @@
+BRD
+	Nature's Minne aoe 15% increase to HP recovery via healing actions duration 15s recast 120s
+
+MCH
+	Dismantle debuff 10% duration 10s recast 120s
+
+DNC
+	Curing Waltz aoe cure potency 300 (+300 from dp?) recast 60s
+	(lvl80+) Improvization -> Improvised Finish regen 100 potency duration 15s into 5-10% max hp shield duration 30 sec recast 120s
+
+Ranged
+	Second Wind cure 500 potency recast 120s
+	"Tactition" - 10% duration 15s recast 120s
+	(lvl90+) Enhanced "Tactition" - 10% duration 15s recast 90s
+
+MNK
+  Mantra 10% aoe HP recovery via healing actions duration 15s recast 90s
+  Riddle of Earth 20% self duration 10s on hit regen potency 100 duration 15s
+
+DRG
+  --
+
+NIN
+  Shade Shift self 20% max hp shield duration 20s recast 120
+
+SAM
+  Third Eye 10% duration 4s recast 15s
+
+RPR
+  Arcane Crest self 10% max hp shield duration 5s 
+  (lvl90+) Enhanced Arcane Crest on shield break regen potency 50 duration 15s
+
+
+Melee
+	Second Wind cure 500 potency recast 120s
+  Bloodbath damage dealt -> hp heal duration 20s recast 90s
+	Feint debuff phys 10% magic 5% duration 10s recast 90s
+
+PLD
+	Sentinel - 30% all dmg duration 15s recast 120s
+	Cover - Take damage for target duration 12s recast 120
+	Hallowed Ground - Invuln duration 10s recast 420s
+	Bulwark - Block incoming attacks??? duration 10s recast 90s
+	Divine Veil - aoe 10% max health shield duration 30s recast 90s
+	Intervention - Reduces target party member's damage taken by 10%. Duration: 6s Increases damage reduction by an additional 10% if Rampart or Sentinel are active recast 10s
+  Passage if Arms - self block 100%, party 15% Duration 18s (or 3 if flashing) recast 120 
+	(lvl90+) Intervention increase intervention duration to 8s
+				Knight's Resolve Effect: Reduces damage taken by 10%
+				Duration: 4s
+				Knight's Benediction Effect: Gradually restores HP
+				Cure Potency: 250
+				Duration: 12s
+				recast 10s
+  (<80) Shelton - 15% all dmg duration 4s recast 5s
+  (==lvl80) Sheltron duration 6s
+	(lvl90+) Holy Sheltron - 15% duration 8s 15% 4s regen potency 250 duration 12s recast 5s
+	(lvl90+) Enhanced Divine Veil - aoe 10% max health shield and 400 potency cure duration 30s recast 90s
+
+WAR
+  Thrill of Battle - 20% heal and increase max HP 20% recast 90s
+  Vengeance - 30% duration 15s recast 120s
+  Holmgang - invuln no less than 1 duration 10s recast 240s
+  Equilibrium - cure 1200 potency recast 60s
+  Shake It Off - REMOVES ToB, Vengeance, Bloodwhetting aoe 15% max hp shield +2%/4%/6% for each ability gobbled up duration 30s regen potency 100 duration 15s
+  (lvl80+) Enhanced Shake It Off +300 potency cure
+  (lvl80+) Enhanced Thrill of Battle + increase to HP recovery via healing actions 20% duration 10s
+  (lvl80+) Nascent Flash - self and target. self: regen on hit cure potency 400. target: hp recovered by WAR duration 6s recast 25s shared with Bloodwhetting
+  (lvl90+) Enhanced Nascent Flash	duration 8s 10% duration 4s + 400 heal potency shield duration 20s 
+  (<lvl90) Raw Intuition - 10% duration 6s restore hp on hit potency 400 (two hits assuming 2.5 gcd)
+  (lvl90+) Bloodwhetting - 10% duration 8s on hit potency 400 (two hits assuming 2.5 gcd) 10% duration 4s + 400 heal potency shield duration 20s recast 25s shared with Nascent Flash
+  (lvl90+) Enhanced Equilibrium	 + regen potency 200 duration 15s
+
+DRK
+  Shadow Wall 30% duration 15s recast 120s
+  Dark Mind magic 20% duration 10s recast 60s
+  Living Dead Invuln recast 300s
+  The Black Night targeted 25% max hp shield duration 7s
+  Dark Missionary aoe magic 10% duration 15s recast 90s
+  Oblation targeted 10% 2 stacks duration 10s recast 60s
+
+GNB
+  Camouflage 50% parry rate 10% duration 20 recast 90s
+  Nebula 30% duration 15s recast 120s
+  Aurora regen potency 200 duration 18s 2 stacks
+  Superbolide invuln 100% duration 10s recast 360s
+  Heart of Light aoe magic 10% duration 15s recast 90s
+  (<lvl90)Heart of Stone targeted 15% duration 7s
+  (lvl90+) Heart of Corundrum targeted 15% duration 8s and 15% duration 4s and 900 potency heal below 50% or at end of duration duration 20s recast 25s
+
+Tank
+	Rampart 20% duration 20s recast 90s
+	Reprisal debuff 10% duration 10s recast 60s
+	Tank Mastery 20% (trait)
+
+WHM
+  Cure gcd potency 500 cast 1.5s 
+  Medica gcd  aoe heal 400 potency cast 1.5s 
+  Cure II gcd 800 potency heal cast 2s
+  Regen gcd potency 250 regen duration 18s
+  Cure III gcd aoe 600 potency heal cast 2s
+  Medica II gcd aoe heal 250 potency regen 150 potency duration 15s cast 20s
+  Benediction 100% recast 180s
+  Afflatus Solace gcd 800 potency cure three stacks 20s recast AFTER combat starts
+  Asylum regen potency 100 duration 24s recast 90s
+  (lvl80+) Asylum + HP recovery via healing actions by 10%
+  Tetragrammaton 700 potency heal recast 60s
+  Divine Benison targeted 500 potency heal duration 15s recast 30s
+  (lvl90+) Divine Benison + two stacks 
+  Plenary Indulgence buffs aoe healing gcds to do an additional 200 potency heal
+  Afflatus Rapture gcd aoe 400 potency heal three stacks 20s recast AFTER combat starts
+  Temperance buffs outgoing gcd healing 20%, 10% mit duration 20s recast 120s
+  Aquaveil Targeted 15% duration 8s recast 60s
+  Liturgy of the Bell 5 stacks of on-hit 400 potency cure once per second or 200 potency for all unused stacks duration 20s recast 180s
+  (lvl90+) Cure, Cure II, Regen, Cure III, Medica II, Afflatus Solace, Afflatus Rapture heal potencies increased
+
+SCH
+  Physick gcd 450 potency cure 1.5s cast
+  Whispering Dawn regen potency 80 suration 21s recast 60s
+  Adloquium gcd cure potency 300 180% healed shield (not going to counting crits)
+  Deployment Tactics aoe spread adlo recast 120s
+  (lvl90+) Enhanced Deployment Tactics recast lowered to 90s
+  Succor gcd aoe 200 potency cure 160% healed shield duration 30s cast 2s 
+  Fey Illumination 5% buff gcd heals by 10%  for party duration 20s recast 120s
+  Lustrate 600 potency cure three stacks every 60s
+  Sacred Soil 10% three stacks every 60s recast 30s
+  (lvl80+) Enhanced Sacred Soil regen potency 100
+  Indomitability aoe heal potency 400 three stacks every 60s recast 30s
+  Dissipation gcd heal buff to self 20% duration 30s and give stacks
+  Excogitation 800 potency cure at 50% duration 45s three stacks every 60s recast 45s
+  Fey Union 300 potency cure (just gonna treat this as a spot heal with 3s cd)
+  Recitation crit heal combo for adlo succor indom and excog recast 90s
+  Fey Blessing aoe 320 potency cure
+  Summon Seraph -> Seraphic Veil on hit 180 potency cure to one person and shield every 3s duration 30s recast 120s (better embrace basically)
+  Summon Seraph -> Consolation aoe 250 potency heal and shield 2 stacks duration 30s recast 120s
+  Protraction 10% heal plus 10% max hp plus incoming healing buff duration 10s recast 60s
+  Expedient 10% duration 20s recast 120s
+  Embrace 180 potency heal every 3s to lowest hp
+  (lvl90+) Enhanced Healing Magic Physick, Embrace, Seraphic Veil, Adlo, Succor potencies increased
+
+AST
+  Benefic gcd cure potency 500 cast 1.5s
+  Helios aoe gcd cure potency 400 cast 1.5s
+  Essential Dignity cure potency 400 to 900 depending on target's hp, recast 40s
+  (lvl80+) Enhanced Essential Dignity two stacks
+  Benefic II 800 potency cure cast 1.5s
+  Aspected Benefic gcd 250 potency cure and regen potency 250 duration 15s recast 2.5s
+  Aspected Helios gcd aoe 250 potency cure and regen potency 150 duration 15s cast 1.5s
+  Synastry tethers target to 40% of gcd heals appled to someone else in the party duration 20s recast 120s
+  Collective Unconscious (gonna treat this like passage of arms? its a channel...) channel duration 18s 10% duration 5s regen cure potency 100 duration 15s recast 60s
+  Celestial Opposition aoe 200 potency cure and regen potency 100 duration 15s recast 60s
+  Earthly Star cure potency 540 if premature cure potency 720 after 10s recast 60s
+  Celestial Intersection 200 potency cure IF SECT 200% hp shield duration 30s recast 30s
+  (lvl90+) Enhanced Celestial Intersection two stacks
+  Horoscope aoe 200 potency cure OR 400 if hit with helios or aspected Helios recast 60s
+  Neutral Sect 20% gcd heal buff duration 20s adds 250% shield to aspected benefic and 125% shield to aspected helios duration 30s
+  Exaltation 10% duration 8s then 500 potency cure
+  Macrocosmos 200 potency 200 plus 50% of damage taken recast 180s
+  (lvl90+) Enhanced Healing Magic Benefic, Helios, Benefic II, Aspected Benefic, Aspected Helios potencies icreased
+
+SGE
+  Diagnosis gcd 450 potency cure 1.5s cast
+  Kardia...... Dosis e. dosis Phlegma dyskrasia Toxicon pneuma
+  Soteria buff kardia potency 70% 4 times recast 90s
+  Prognosis gcd aoe 300 potency cure cast 2s
+  Physis aoe 100 potency regen duration 15s recast 60s
+  "Adlo" Eukrasian Diagnosis gcd 300 potency cure 180% hp shield duration 30s (does not stack with adlo or e. prognosis) cast 1.5
+  Eukrasian Prognosis gcd 100 potency cure 320% hp shield duration 30s (does not stack with adlo shield or e. diagnosis)
+  Druochole 600 potency cure uses addersgall 
+  Kerachole 10% duration 15s regen 100 potency duration 15s uses addersgall 
+  Ixochole aoe 400 potency cure recast 30s
+  Zoe buffs next outgoing gcd heal 50% duration 30s recast 90s
+  Pepsis eat e. diag (potency 450) or e. prog (potency 350) to heal instead
+  Physis II aoe 130 potency  regen duration 15s buff increase all incoming heals 10% duration 10s recast 60s
+  Taurochole 700 potency cure and 10% mit duration 15s (cnanot stack with kerachole) uses addersgall
+  Haima 5 stacks of 300 potency shield duration 15s unused stacks 150 potency cure recast 120s
+  Rhizomata stack of addersgall recast 90s
+  Holos aoe 300 potency cure and hp shield duration 30s 10% duration 20s recast 120s
+  Panhaima aoe 5 stacks of 200 potency shield duration 15s unused stacks 100 potency cure recast 120s
+  Krasis targeted buff incoming heals 20% duration 10s recast 60s
+  Pneuma gcd aoe 600 potency cure cast 1.5s recast 120s (CAN BE USED WITH ZOE)
+
+BLM
+	Manaward - 30% max hp shield to self duration 20s recast 120s
+B
+SMN
+	Radiant Aegis 20% max hp shield to self duration 30s recast 60s
+	(lvl 80+) Summon Phoenix -> Everlasting Flight regen potency 100 duration 21s recast 60s
+	(lvl 80+) Summon Phoenix -> Rekindle targeted instant heal 400 potency regen potency 200 to 75% hp duration 15s recast 20s
+	(lvl 90+) Radiant Aegis gets two stacks
+
+RDM
+	(lvl90+) Magick Barrier aoe magic 10% 5% increase to HP recovery via healing actions duration 10s recast 120s
+
+Caster
+	Addle - debuff phys 5% magic 10% duration 10s recast 90s
+	Main and Mend II - Increases base action damage and HP restoration by 30% (trait)
+
+
+Omitting: SMN Physick, Phoenix Enkindle, Vercure, Clemency, innate tank hp regen (inc brutal shell), The Warden's Paean, Life Surge, Assize, Emergency Tactics?, Angel's Whisper, Seraphic Illumination (becauase they are just reskinned fairy shit), Lady of Crowns, Parry in camoflauge 
+
+
+
+Healing Up Buffs
+There's two notable types of healing up buffs in the game. The most common for healers to have is written as 'increases healing magic potency.' Skills with this phrasing buff the outgoing healing done from GCD heals only by the person(s) with this buff applied, and it does not affect oGCD heals.
+
+Healer actions with this effect:
+• Neutral Sect (AST)
+• Fey / Seraphic Illumination (SCH | applies to the whole party)
+• Dissipation (SCH)
+• Temperance (WHM)
+• Zoe (SGE)
+
+The other type is written as 'HP recovery via healing actions.' Skills with this phrasing increase the amount of incoming heals on the target with this buff and the increase is applied to ALL heals, including oGCDs. Many of these skills come from non-healer roles, so it's helpful to know how they function.
+
+Actions with this effect:
+• Asylum (WHM | Players must be inside the bubble to receive buff)
+• Protraction (SCH)
+• Physis II (SGE | AoE buff)
+• Krasis (SGE)
+• Mantra (MNK | AoE buff)
+• Nature's Minne (BRD | AoE buff)
+• Thrill of Battle (WAR)
+• Magick Barrier (RDM | AoE buff)
+
+Stuff to consider:
+
+Duration
+Recast time
+shared recast timers
+Standard heals
+Standard mits
+Regens
+Magic only/mostly mits
+Physical only/mostly mits
+Abilities that cannot stack with others but have different names (tactition/shield samba/etc, sch and sge gcd shields, taurochole vs kerachole)
+"recovery via healing actions" buffs ALL incoming heals to whoever has this buff (Asylum Protraction Physis II Krasis Mantra Nature's Minne Thrill of Battle Magick Barrier)
+Channeling abilities whose potencies increase with time (improvisation, collective unconscious, earthly star)
+Targets (self, self and ___, everyone except self and ___ (synastry), party wide, specific player)
+On taking damage effects (hp loss, shield breaks, ex liturgey of the bell)
+Shields that are a % of max hp
+Shields that are a % of hp healed (including overheal)
+Healed based on damage dealt 
+Heals based on hits (living dead, bloodwhetting)
+Taking damage for target
+Tank invulns
+Blocks
+Abilities augmented by other abilities (intervention, lilies by plenary, celestial intersection by neutrla sect, etc)
+Abilities that 'consume' other abilities (shake it off)
+Max hp increases
+Stacks (related: resources like addersgall, aetherflow, and lilies)
+UNUSED stacks (lily bell, haima, panhaima)
+Parry
+Boss Debuffs
+Cast time?
+Whether it is a spell or ability (gcd or ogcd)
+% heals (benediction 100%)
+Passive traits that buff outgoing heals, innate defense, etc //this is not related to the abilities themselves, but characters
+Guaranteed Crit heals (recitation)
+Embrace/Seraphic Veil   //this is not an activated effect, this should be considered a passive regen trait
+Heal potencies scaling off hp (essential dignity)
+Heal based on damage taken in the past (Macrocosmos)
+Kardia //this is not an activated effect, this should be considered a passive regen trait
+Abilities that heal at a certain % or activates at end of duration (excog, heart of corundrum)
+
+
+
+Stuff that is provided by the user either implicitely or explicitly:
+-who is casting
+-who the target is
+-how long the channel is (how will this impact duration?)
+-what second of the fight it is cast at
+
+NOTES:
+- shields scaling off heal potency work with incoming heal buffs!
+- essential dignity potency = 400+(700 * missing HP%) or 1100-(700 * current HP%) (400-1100 potency)
+
+
+
+
+Heal { type: percent/flat, amount: number? or potency... }
+
+ability name {
+  heals { [
+    buff: string (really just for bloodwhetting)
+    potency: number,
+    percentage: percentage
+    onHit: bool,
+    duration: number (for regens, delays, shields),
+    target: single/all/selfPlusOne/anyButSelf/allButSelf
+    isIncreaseMaxHP: bool,
+    buffedBy: [ability {amount: percentage, duration: number, isConsumed: bool}],
+    hasHpTrigger: percentage
+  ]}
+  mits {[
+    buff: string (really just for bloodwhetting)
+    amount {
+      magic: percent, 
+      physical: percent
+    },
+    duration: number,
+    target: single/all/selfPlusOne/anyButSelf/allButSelf,
+    buffedBy: [ability {amount: percentage, duration: number, isConsumed: bool}] (intervention, shake it off),
+    isDebuff: bool
+  ]}
+  shields {[
+    duration: number,
+    target: single/all/selfPlusOne/anyButSelf/allButSelf
+    buffedBy: [ability {amount: percentage, duration: number, isConsumed: bool}]
+    scaling: potency: number, hp: self/caster healed: number? percent?
+  ]}
+  recast: number
+  noStackWith: [ability]
+  castSecond: number
+  castDuration: number
+  castBy: player
+  channelDuration: number
+  isTankInvuln: bool
+  type?: spell or ability (for purposes of healing potency buff) maybe not needed?
+  stacks: number
+  isIncomingHealsBuff: bool
+  isGcdHealBuff: bool
+  sharesRecastTimerWith: []
+}
