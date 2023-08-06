@@ -42,19 +42,15 @@ const test_cases = {
   },
   'divine veil': {
     'shields': [{
-      'type': 'percent',
       'target': 'all',
-      'scaling': {'hp': 'caster'},
+      'scaling': {'casterHp': .1},
       'duration': 30
-    },{
+    }],
     'heals': [{
       'potency': 400,
       'target': 'all',
-    }]
-
     }],
     'recast': 90,
-    'type': 'ability'
   },
   'intervention': {
     'mits': [{
@@ -63,11 +59,6 @@ const test_cases = {
         'physical': .1
       },
       'duration': 8,
-      'buffedBy': [{
-        'rampart': {'amount': .1},
-        'sentinel': {'amount': .1} // XOR
-      },
-      ],
       'target': 'anyButSelf'
     }, {
       'amount': {
@@ -83,6 +74,22 @@ const test_cases = {
       'target': 'anyButSelf'
     }],
     'recast': 10,
+    'buffedBy': [{
+      'rampart': {
+        'mits': [{
+          'amount': {
+            'magic': .1,
+            'physical': .1},
+          'duration': 8,
+          'target': 'anyButSelf'}]},
+      'sentinel': {
+        'mits': [{
+          'amount': {
+            'magic': .1,
+            'physical': .1},
+          'duration': 8,
+          'target': 'anyButSelf'}]} 
+    },],
   },
   'passage of arms': {
     'mits':[{
@@ -100,7 +107,9 @@ const test_cases = {
 
     }],
     'recast': 120,
-    'channelDuration': 0
+    'channel': {
+      'channelDuration': 0
+    }
   },
   'reprisal': {
     'mits': [{
@@ -143,23 +152,7 @@ const test_cases = {
     'shields': [{
       'duration': 30,
       'target': 'all',
-      'scaling': {'hp': 'self'},
-      'buffedBy': [{
-        'thrill of battle': {   // AND
-          'amount': .02,
-          'isConsumed': true
-        }
-      }, {
-        'vengeance': {
-          'amount': .02,
-          'isConsumed': true
-        }
-      }, {
-        'bloodwhetting': {
-          'amount': .02,
-          'isConsumed': true
-        }
-      }]
+      'scaling': {'selfhP': .15}
     }],
     'heals': [{
       'potency': 100,
@@ -169,7 +162,32 @@ const test_cases = {
       'potency': 300,
       'target': 'single'
     }],
-    'recast': 90
+    'recast': 90,
+    'buffedBy': [{
+      'thrill of battle': {   // AND
+        'shields': [{
+          'duration': 30,
+          'target': 'all',
+          'scaling': {'amount': .02}}],
+        'isConsumed': true
+      }
+    }, {
+      'vengeance': {
+        'shields': [{
+          'duration': 30,
+          'target': 'all',
+          'scaling': {'amount': .02}}],
+        'isConsumed': true
+      }
+    }, {
+      'bloodwhetting': {
+        'shields': [{
+          'duration': 30,
+          'target': 'all',
+          'scaling': {'amount': .02}}],
+        'isConsumed': true
+      }
+    }]
   },
   'bloodwhetting': {
     'mits': [{
@@ -206,9 +224,9 @@ const test_cases = {
       },
       'duration': 15,
       'target': 'all',
+      'noStackWith': ['shield samba', 'troubadour']
     }],
-    'recast': 90,
-    'noStackWith': ['shield samba', 'troubadour']
+    'recast': 90
   },
   'shield samba': {
     'mits': [{
@@ -218,9 +236,9 @@ const test_cases = {
       },
       'duration': 15,
       'target': 'all',
+      'noStackWith': ['tactition', 'troubadour']
     }],
-    'recast': 90,
-    'noStackWith': ['tactition', 'troubadour']
+    'recast': 90
   },
   'asylum': {
     'heals': [{
@@ -229,7 +247,7 @@ const test_cases = {
       'target': 'all'
     }],
     'recast': 90,
-    'isIncomingHealsBuff': true
+    'isIncomingHealsBuff': true,
   },
   'heart of corundrum': {
     'mits': [{
@@ -265,22 +283,165 @@ const test_cases = {
     }],
     'recast': 180
   },
-  'adloquium': {},
-  'zoe': {},
-  'eukrasian diagnosis': {},
-  'pepsis': {},
-  'haima': {},
-  'improvisation': {},
-  'liturgy of the bell': {},
-  'recitation': {},
-  'excogitation': {},
-  'macrocosmos': {}, // i really think this needs its own special case
+  'adloquium': {
+    'heals': [{
+      'potency': 300,
+      'target': 'single',
+    }],
+    'shields':[{
+      'buff': 'galvanize', //SUCCOR'S BUFF IS ALSO GALVANIZE
+      'scaling': {'healed': 1.8},
+      'duration': 30,
+      'target': 'single',
+      'noStackWith': ['eukrasian diagnosis', 'eukrasian prognosis']
+    }],
+    'recast': 2.5,  //will be rounding up to 3
+    'castDuration': 2,
+    'isGcd': true,
+    'buffedBy': [{
+      'recitation': {
+        'heals':[{
+          'potency': '?????', //CRIT SCALING
+          'target': 'single'
+        }],
+        'shields':[{
+          'buff': 'catalyze',
+          'duration': 30,
+          'target': 'single'
+        }],
+        'isConsumed': true
+      }},
+      {
+      'deployment tactics': {
+        'shields':[{
+          'buff': 'galvanize', // SUCCOR BUFF IS ALSO GALVANIZE
+          'scaling': {'healed': 1.8},
+          'duration': 30,   // SHOULD BE THE DURATION OF SOURCE GALVANIZE
+          'target': 'all',
+          'noStackWith': ['eukrasian diagnosis', 'eukrasian prognosis']
+        }],
+        'isConsumed': true
+      }}]
+  },
+  'recitation': {   //adlo, succor, indomitability, excogitation
+    'isHealBuff': true,
+    'recast': 90,
+    'duration': 15
+  },
+  'zoe': {    // all sage gcd heals
+    'isHealBuff': true,
+    'recast': 90,
+    'duration': 30
+  },
+  'eukrasian diagnosis': {
+    'heals':[{
+      'potency': 300,
+      'target': 'single',
+    }],
+    'shields':[{
+      'scaling': {'healed': 1.8},
+      'duration': 30,
+      'target': 'single',
+      'noStackWith': ['adloquium', 'eukrasian prognosis']
+    }],
+    'recast': 1.5, //rounded up to 2
+    'isGcd': true,
+    'buffedBy': [{
+      'zoe': {
+        'heals':[{
+          'potency': 150,
+          'target': 'single'
+      }],
+        'shields':[{
+          'scaling': {'healed': 1.8},
+          'duration': 30,
+          'target': 'single',
+          'noStackWith': ['adloquium', 'eukrasian prognosis'] 
+      }],
+      'isConsumed': true
+      }
+    }]
+  },
+  'improvisation': {
+    'heals': [{
+      'potency': 100,
+      'duration': 15,
+      'target': 'all'
+    }],
+    'recast': 120,
+    'channel': {
+      'channelDuration': 0,
+      'interval': 3,
+      'effects': {
+        3: {
+          'shields': [{
+            'duration': 30,
+            'target': 'all',
+            'scaling': {'selfHp': .06}
+          }]
+        },
+        6: {
+          'shields': [{
+            'duration': 30,
+            'target': 'all',
+            'scaling': {'selfHp': .07}
+          }]
+        },
+        9: {
+          'shields': [{
+            'duration': 30,
+            'target': 'all',
+            'scaling': {'selfHp': .08}
+          }]
+        },
+        12: {
+          'shields': [{
+            'duration': 30,
+            'target': 'all',
+            'scaling': {'selfHp': .1}
+          }]
+        }
+      }
+    }
+  },
+  'haima': {
+    'shields': [{
+      'duration': 15,
+      'target': 'single',
+      'scaling': {'potency': 300}
+    }], 
+    'recast': 120,
+    'stackTrigger': 'shieldBreak',
+    'unusedStackEffect': {
+      'heals': [{
+        'potency': 150,
+        'target': 'single'
+      }]
+    }
+  },
+  'liturgy of the bell': {
+    'heals': [{
+      'potency': 400,
+      'duration': 20,
+      'target': 'all'
+    }],
+    'recast': 180,
+    'stackTrigger': 'hpLoss',
+    'unusedStackEffect': {
+      'heals': [{
+        'potency': 200,
+        'target': 'all'
+      }]
+    }
 
-
-
-
-
-
-
+  },
+  'macrocosmos': {
+    'heals':[{
+      'potency': 200,
+      'target': 'all'
+    }],
+    'recast': 180,
+    'isFuckingMacrocosmos': true
+  }
 }
 

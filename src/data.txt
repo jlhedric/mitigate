@@ -196,7 +196,7 @@ Caster
 	Main and Mend II - Increases base action damage and HP restoration by 30% (trait)
 
 
-Omitting: SMN Physick, Phoenix Enkindle, Vercure, Clemency, innate tank hp regen (inc brutal shell), The Warden's Paean, Life Surge, Assize, Emergency Tactics?, Angel's Whisper, Seraphic Illumination (becauase they are just reskinned fairy shit), Lady of Crowns, Parry in camoflauge 
+Omitting: SMN Physick, Phoenix Enkindle, Vercure, Clemency, innate tank hp regen (inc brutal shell), The Warden's Paean, Life Surge, Assize, Emergency Tactics?, Angel's Whisper, Seraphic Illumination (because they are just reskinned fairy shit), Lady of Crowns, Parry in camoflauge 
 
 
 
@@ -274,50 +274,57 @@ NOTES:
 - shields scaling off heal potency work with incoming heal buffs!
 - essential dignity potency = 400+(700 * missing HP%) or 1100-(700 * current HP%) (400-1100 potency)
 
-
+ASK THE BALANCE
+-bloodbath scaling
+-brutal shell uptime for purposes of heart of corundrum
 
 
 Heal { type: percent/flat, amount: number? or potency... }
 
 ability name {
   heals { [
-    buff: string (really just for bloodwhetting)
+    buff: string (really just for bloodwhetting, adlo)
     potency: number,
     percentage: percentage
-    onHit: bool,
     duration: number (for regens, delays, shields),
     target: single/all/selfPlusOne/anyButSelf/allButSelf
     isIncreaseMaxHP: bool,
-    buffedBy: [ability {amount: percentage, duration: number, isConsumed: bool}],
     hasHpTrigger: percentage
+    noStackWith: [ability]
+
   ]}
   mits {[
-    buff: string (really just for bloodwhetting)
+    buff: string (really just for bloodwhetting, adlo)
     amount {
       magic: percent, 
       physical: percent
     },
     duration: number,
     target: single/all/selfPlusOne/anyButSelf/allButSelf,
-    buffedBy: [ability {amount: percentage, duration: number, isConsumed: bool}] (intervention, shake it off),
     isDebuff: bool
+    noStackWith: [ability]
+
   ]}
   shields {[
+    buff: string (really just for bloodwhetting, adlo)
     duration: number,
     target: single/all/selfPlusOne/anyButSelf/allButSelf
-    buffedBy: [ability {amount: percentage, duration: number, isConsumed: bool}]
-    scaling: potency: number, hp: self/caster healed: number? percent?
+    scaling: potency: number, selfHp: percent casterHp: percent healed: number? percent?
+    noStackWith: [ability]
+
   ]}
   recast: number
-  noStackWith: [ability]
   castSecond: number
   castDuration: number
   castBy: player
-  channelDuration: number
+  channel: {channelDuration: number, interval: number, effects: {heals, mits...}}
   isTankInvuln: bool
-  type?: spell or ability (for purposes of healing potency buff) maybe not needed?
+  isGcd: bool (for the purposes of gcd only buffs)
   stacks: number
-  isIncomingHealsBuff: bool
+  isHealBuff: bool
   isGcdHealBuff: bool
   sharesRecastTimerWith: []
+  buffedBy: {ability: mits: heals: ... isConsumed: bool}
+  'stackTrigger': hploss, shieldbreak
+  unusedStackEffect: {heals: ... mits... shields...}
 }
