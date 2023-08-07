@@ -328,3 +328,8 @@ ability name {
   'stackTrigger': hploss, shieldbreak
   unusedStackEffect: {heals: ... mits... shields...}
 }
+
+attributes:
+  maxhp, defense, magic defense, determination, healing magic potency
+  tank only: tenacity
+  healer only: mind 

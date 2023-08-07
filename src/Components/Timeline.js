@@ -2,6 +2,7 @@ import React, {useState} from 'react'
 import AbilitiesBucket from './AbilitiesBucket'
 import Damage from './Damage'
 import HpBucket from './HpBucket'
+import PartyModal from './PartyModal'
 
 const tempDefaultAttack = {'name': 'demoAttack', 'amount': 2, 'type': 'physical', 'isDotTick': false, 'isTargetable': false, 'id': 123}
 const tempSecondDefaultAttack = {'name': 'demoAttack2', 'amount': 3, 'type': 'physical', 'isDotTick': false, 'isTargetable': false, 'id': 456}
@@ -21,6 +22,16 @@ const Timeline = () => {
       0: tempDefaultDamageJson,
       1: tempDefaultDamageJson,
       2: tempDefaultDamageJson
+    },
+    'partyAttributes': {
+      'Player1': {'job': 'drk', 'lvl': 90, 'maxhp': 1500, 'physDef': 0, 'magicDef': 0, 'det': 0, 'tenacity': 0, 'mind': 0, 'healMagPotency': 0},
+      'Player2': {'job': 'pld', 'lvl': 90, 'maxhp': 10, 'physDef': 0, 'magicDef': 0, 'det': 0, 'tenacity': 0, 'mind': 0, 'healMagPotency': 0},
+      'Player3': {'job': 'whm', 'lvl': 90, 'maxhp': 10, 'physDef': 0, 'magicDef': 0, 'det': 0, 'tenacity': 0, 'mind': 0, 'healMagPotency': 0},
+      'Player4': {'job': 'sge', 'lvl': 90, 'maxhp': 10, 'physDef': 0, 'magicDef': 0, 'det': 0, 'tenacity': 0, 'mind': 0, 'healMagPotency': 0},
+      'Player5': {'job': 'smn', 'lvl': 90, 'maxhp': 10, 'physDef': 0, 'magicDef': 0, 'det': 0, 'tenacity': 0, 'mind': 0, 'healMagPotency': 0},
+      'Player6': {'job': 'blm', 'lvl': 90, 'maxhp': 10, 'physDef': 0, 'magicDef': 0, 'det': 0, 'tenacity': 0, 'mind': 0, 'healMagPotency': 0},
+      'Player7': {'job': 'rpr', 'lvl': 90, 'maxhp': 10, 'physDef': 0, 'magicDef': 0, 'det': 0, 'tenacity': 0, 'mind': 0, 'healMagPotency': 0},
+      'Player8': {'job': 'dnc', 'lvl': 90, 'maxhp': 10, 'physDef': 0, 'magicDef': 0, 'det': 0, 'tenacity': 0, 'mind': 0, 'healMagPotency': 0}
     }
   })
 
@@ -46,6 +57,11 @@ const Timeline = () => {
       setFightState({'fightDuration': duration, 'hpCollection': hpCollection, 'damageCollection': damageCollection})
     }
   };
+
+  const handleCreatePartySubmit = (e) => {
+    e.preventDefault();
+    console.log('boop')
+  }
 
   const handleAddDamageSubmit = (e) => {
     e.preventDefault();
@@ -94,6 +110,9 @@ const Timeline = () => {
           placeholder='Fight duration in seconds'/>
         <button type='submit'>Submit</button>
       </form>
+      <br/>
+      <PartyModal onSubmit={handleCreatePartySubmit}/>
+      <br/>
       <br/>
       {childrenAmount.map((_, index) => (
         <Damage 

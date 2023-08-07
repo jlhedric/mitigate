@@ -2,7 +2,7 @@ import React from 'react'
 
 //REMEMBER. ABILITIES IS -ALL- SOURCES OF MIT AND HEALING A SECOND.
 
-const Abilities = ({id}) => {
+const Abilities = ({id, name}) => {
   const [checked, setChecked] = React.useState(false);
 
   const handleChange = () => {

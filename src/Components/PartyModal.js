@@ -1,21 +1,21 @@
 import React, { useState} from 'react';
 import { createPortal } from 'react-dom';
-import DamageModalContent from './DamageModalContent';
+import PartyModalContent from './PartyModalContent';
 
-const DamageModal = ({id, onSubmit}) => {
+const PartyModal = ({onSubmit}) => {
   const [showModal, setShowModal] = useState(false);
 
   return (
     <React.Fragment>
       <button onClick={() => setShowModal(true)}>
-        Add Damage
+        Create Party
       </button>
       {showModal && createPortal(
-        <DamageModalContent onClose={() => setShowModal(false)} id={id} onSubmit={onSubmit}/>,
+        <PartyModalContent onClose={() => setShowModal(false)} onSubmit={onSubmit}/>,
         document.body
       )}
     </React.Fragment>
   );
 }
 
-export default DamageModal;
+export default PartyModal;
