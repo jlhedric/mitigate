@@ -1,22 +1,23 @@
 const JOBS = {
-  "pld":{},
-  "war":{},
-  "drk":{},
-  "gnb":{},
-  "whm":{},
-  "ast":{},
-  "sch":{},
-  "sge":{},
-  "drg":{},
-  "mnk":{},
-  "nin":{},
-  "sam":{},
-  "blm":{},
-  "smn":{},
-  "rdm":{},
-  "brd":{},
-  "mch":{},
-  "dnc":{}
+  "pld":['sentinel'],
+  "war":[],
+  "drk":['bulwark', 'sentinel'],
+  "gnb":[],
+  "whm":[],
+  "ast":[],
+  "sch":[],
+  "sge":[],
+  "drg":[],
+  "mnk":[],
+  "nin":[],
+  "sam":[],
+  "rpr":[],
+  "blm":[],
+  "smn":[],
+  "rdm":[],
+  "brd":[],
+  "mch":[],
+  "dnc":[]
 }
 
 const test_cases = {
@@ -445,4 +446,4 @@ const test_cases = {
   // }
 }
 
-export {test_cases}
+export {test_cases, JOBS}

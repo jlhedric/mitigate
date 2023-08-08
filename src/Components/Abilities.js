@@ -1,25 +1,17 @@
-import React from 'react'
+import React, {Fragment} from 'react'
+import Ability from './Ability';
 
-//REMEMBER. ABILITIES IS -ALL- SOURCES OF MIT AND HEALING A SECOND.
+//REMEMBER. ABILITIES IS -ALL- ABILITIES ACTIVE ON A PLAYER FOR EACH SECOND.
 
-const Abilities = ({id, name}) => {
-  const [checked, setChecked] = React.useState(false);
-
-  const handleChange = () => {
-    setChecked(!checked);
-  };
+const Abilities = ({id, partyAttributes}) => {
+  const players = Object.keys(partyAttributes)
 
   return (
-    <span>Ability {id} 
-      <label>
-        <input
-          type="checkbox"
-          checked={checked}
-          onChange={handleChange}
-        />
-    </label>
-    &nbsp; 
-  </span>
+    <span>
+      Second {id}
+      <br/>
+      {players.map((player) => (partyAttributes[player]['abilities'].map((ability) => (<Fragment><Ability key={player + '_' + ability} caster={player} name={ability}/><br/></Fragment>))))}
+    </span>
   )
 }
 

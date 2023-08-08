@@ -3,6 +3,7 @@ import AbilitiesBucket from './AbilitiesBucket'
 import Damage from './Damage'
 import HpBucket from './HpBucket'
 import PartyModal from './PartyModal'
+import {JOBS} from '../data'
 
 const tempDefaultAttack = {'name': 'demoAttack', 'amount': 2, 'type': 'physical', 'isDotTick': false, 'isTargetable': false, 'id': 123}
 const tempSecondDefaultAttack = {'name': 'demoAttack2', 'amount': 3, 'type': 'physical', 'isDotTick': false, 'isTargetable': false, 'id': 456}
@@ -24,14 +25,14 @@ const Timeline = () => {
       2: tempDefaultDamageJson
     },
     'partyAttributes': {
-      'Player1': {'job': 'drk', 'lvl': 90, 'maxhp': 1500, 'physDef': 0, 'magicDef': 0, 'det': 0, 'tenacity': 0, 'mind': 0, 'healMagPotency': 0},
-      'Player2': {'job': 'pld', 'lvl': 90, 'maxhp': 10, 'physDef': 0, 'magicDef': 0, 'det': 0, 'tenacity': 0, 'mind': 0, 'healMagPotency': 0},
-      'Player3': {'job': 'whm', 'lvl': 90, 'maxhp': 10, 'physDef': 0, 'magicDef': 0, 'det': 0, 'tenacity': 0, 'mind': 0, 'healMagPotency': 0},
-      'Player4': {'job': 'sge', 'lvl': 90, 'maxhp': 10, 'physDef': 0, 'magicDef': 0, 'det': 0, 'tenacity': 0, 'mind': 0, 'healMagPotency': 0},
-      'Player5': {'job': 'smn', 'lvl': 90, 'maxhp': 10, 'physDef': 0, 'magicDef': 0, 'det': 0, 'tenacity': 0, 'mind': 0, 'healMagPotency': 0},
-      'Player6': {'job': 'blm', 'lvl': 90, 'maxhp': 10, 'physDef': 0, 'magicDef': 0, 'det': 0, 'tenacity': 0, 'mind': 0, 'healMagPotency': 0},
-      'Player7': {'job': 'rpr', 'lvl': 90, 'maxhp': 10, 'physDef': 0, 'magicDef': 0, 'det': 0, 'tenacity': 0, 'mind': 0, 'healMagPotency': 0},
-      'Player8': {'job': 'dnc', 'lvl': 90, 'maxhp': 10, 'physDef': 0, 'magicDef': 0, 'det': 0, 'tenacity': 0, 'mind': 0, 'healMagPotency': 0}
+      'Player1': {'job': 'drk', 'abilities': JOBS['drk'], 'lvl': 90, 'maxhp': 1500, 'physDef': 0, 'magicDef': 0, 'det': 0, 'tenacity': 0, 'mind': 0, 'healMagPotency': 0},
+      'Player2': {'job': 'pld', 'abilities': JOBS['pld'], 'lvl': 90, 'maxhp': 10, 'physDef': 0, 'magicDef': 0, 'det': 0, 'tenacity': 0, 'mind': 0, 'healMagPotency': 0},
+      'Player3': {'job': 'whm', 'abilities': JOBS['whm'], 'lvl': 90, 'maxhp': 10, 'physDef': 0, 'magicDef': 0, 'det': 0, 'tenacity': 0, 'mind': 0, 'healMagPotency': 0},
+      'Player4': {'job': 'sge', 'abilities': JOBS['sge'], 'lvl': 90, 'maxhp': 10, 'physDef': 0, 'magicDef': 0, 'det': 0, 'tenacity': 0, 'mind': 0, 'healMagPotency': 0},
+      'Player5': {'job': 'smn', 'abilities': JOBS['smn'], 'lvl': 90, 'maxhp': 10, 'physDef': 0, 'magicDef': 0, 'det': 0, 'tenacity': 0, 'mind': 0, 'healMagPotency': 0},
+      'Player6': {'job': 'blm', 'abilities': JOBS['blm'], 'lvl': 90, 'maxhp': 10, 'physDef': 0, 'magicDef': 0, 'det': 0, 'tenacity': 0, 'mind': 0, 'healMagPotency': 0},
+      'Player7': {'job': 'rpr', 'abilities': JOBS['rpr'], 'lvl': 90, 'maxhp': 10, 'physDef': 0, 'magicDef': 0, 'det': 0, 'tenacity': 0, 'mind': 0, 'healMagPotency': 0},
+      'Player8': {'job': 'dnc', 'abilities': JOBS['dnc'], 'lvl': 90, 'maxhp': 10, 'physDef': 0, 'magicDef': 0, 'det': 0, 'tenacity': 0, 'mind': 0, 'healMagPotency': 0}
     }
   })
 
@@ -123,7 +124,7 @@ const Timeline = () => {
         />))}
       <br/>
       <br/>
-      <AbilitiesBucket fightDuration={fightState['fightDuration']}/>
+      <AbilitiesBucket fightDuration={fightState['fightDuration']} partyAttributes={fightState['partyAttributes']}/>
       <br/>
       <HpBucket fightState={fightState}/>
     </div>
