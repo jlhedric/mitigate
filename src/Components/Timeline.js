@@ -11,6 +11,8 @@ const tempSecondDefaultAttack = {'name': 'demoAttack2', 'amount': 3, 'type': 'ph
 const tempDefaultHpJson = {'Player1': 1500, 'Player2': 10, 'Player3': 10, 'Player4': 10, 'Player5': 10, 'Player6': 10, 'Player7': 10, 'Player8': 10}
 const tempDefaultDamageJson = {'Player1': [tempDefaultAttack, tempSecondDefaultAttack], 'Player2':[tempDefaultAttack], 'Player3': [tempSecondDefaultAttack], 'Player4': [], 'Player5': [], 'Player6': [], 'Player7': [], 'Player8': []}
 
+const tempDefaultAbilities = {'Player1': [], 'Player2': [], 'Player3': [], 'Player4': [], 'Player5': [], 'Player6': [], 'Player7': [], 'Player8': []}
+
 const Timeline = () => {
   const [fightState, setFightState] = useState({
     'fightDuration': 3, 
@@ -24,6 +26,11 @@ const Timeline = () => {
       1: tempDefaultDamageJson,
       2: tempDefaultDamageJson
     },
+    'abilitiesCollection': {
+      0: tempDefaultAbilities,
+      1: tempDefaultAbilities,
+      2: tempDefaultAbilities
+    },
     'partyAttributes': {
       'Player1': {'job': 'drk', 'abilities': JOBS['drk'], 'lvl': 90, 'maxhp': 1500, 'physDef': 0, 'magicDef': 0, 'det': 0, 'tenacity': 0, 'mind': 0, 'healMagPotency': 0},
       'Player2': {'job': 'pld', 'abilities': JOBS['pld'], 'lvl': 90, 'maxhp': 10, 'physDef': 0, 'magicDef': 0, 'det': 0, 'tenacity': 0, 'mind': 0, 'healMagPotency': 0},
@@ -35,13 +42,6 @@ const Timeline = () => {
       'Player8': {'job': 'dnc', 'abilities': JOBS['dnc'], 'lvl': 90, 'maxhp': 10, 'physDef': 0, 'magicDef': 0, 'det': 0, 'tenacity': 0, 'mind': 0, 'healMagPotency': 0}
     }
   })
-
-  const abilitiesJson = {}
-
-  for (var i = 0; i < fightState['fightDuration']; i++) {
-    abilitiesJson[i]= {'Player1':[{'Mit':[], 'Heal': 0}], 'Player2':[{'Mit':[], 'Heal':0}]}
-  }
-  const [abilityCollection, setAbilityCollection] = useState(abilitiesJson)
   
   const handleDurationSubmit = (e) => {
     e.preventDefault();
@@ -50,12 +50,13 @@ const Timeline = () => {
       duration = Math.floor(duration)
       const hpCollection = {}
       const damageCollection = {}
+      const abilitiesCollection = {}
       for (var i = 0; i < duration; i++) {
         hpCollection[i] = tempDefaultHpJson
         damageCollection[i] = tempDefaultDamageJson
-        //damageCollection[i] = {'Player1': [], 'Player2': [], 'Player3': [], 'Player4': [], 'Player5': [], 'Player6': [], 'Player7': [], 'Player8': []}
+        abilitiesCollection[i] = {'Player1': [], 'Player2': [], 'Player3': [], 'Player4': [], 'Player5': [], 'Player6': [], 'Player7': [], 'Player8': []}
       }
-      setFightState({'fightDuration': duration, 'hpCollection': hpCollection, 'damageCollection': damageCollection})
+      setFightState((prevState) => ({'fightDuration': duration, 'hpCollection': hpCollection, 'damageCollection': damageCollection, 'abilitiesCollection': abilitiesCollection, 'partyAttributes': prevState.partyAttributes}))
     }
   };
 
@@ -124,7 +125,7 @@ const Timeline = () => {
         />))}
       <br/>
       <br/>
-      <AbilitiesBucket fightDuration={fightState['fightDuration']} partyAttributes={fightState['partyAttributes']}/>
+      <AbilitiesBucket fightDuration={fightState['fightDuration']} partyAttributes={fightState['partyAttributes']} abilitiesCollection={fightState['abilitiesCollection']}/>
       <br/>
       <HpBucket fightState={fightState}/>
     </div>

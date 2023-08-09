@@ -27,9 +27,9 @@ const test_cases = {
         'magic': .15,
         'physical': .15
       },
-      'duration': 15,
+      'duration': 2,
     }],
-    'recast': 120,
+    'recast': 4,
   },
   'bulwark': {
     'mits': [{
