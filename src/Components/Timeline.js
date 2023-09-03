@@ -12,6 +12,7 @@ const tempDefaultHpJson = {'Player1': 1500, 'Player2': 10, 'Player3': 10, 'Playe
 const tempDefaultDamageJson = {'Player1': [tempDefaultAttack, tempSecondDefaultAttack], 'Player2':[tempDefaultAttack], 'Player3': [tempSecondDefaultAttack], 'Player4': [], 'Player5': [], 'Player6': [], 'Player7': [], 'Player8': []}
 
 const tempDefaultAbilities = {'Player1': [], 'Player2': [], 'Player3': [], 'Player4': [], 'Player5': [], 'Player6': [], 'Player7': [], 'Player8': []}
+// need to send the caster and ability name
 
 const Timeline = () => {
   const [fightState, setFightState] = useState({
@@ -81,6 +82,7 @@ const Timeline = () => {
         'isTargetable': 'isTargetable' in damageFormInput,
         'id': Date.now()
       }
+      
     
       setFightState(prevState => ({
         ...prevState,
@@ -99,6 +101,33 @@ const Timeline = () => {
         }
       }))
     }
+  }
+
+  const handleAddAbilitySubmit = (e) => {
+    e.preventDefault();
+    console.log('boop')
+    const index = Number(e.target.id)
+    const abilityFormInput = Object.fromEntries(new FormData(e.target).entries())
+      const newAbilityObj = {
+      }
+      
+    
+    setFightState(prevState => ({
+      ...prevState,
+      abilitiesCollection: {
+        ...prevState.abilitiesCollection,
+        [index]: {
+          'Player1': abilityFormInput.Player1 ? [...prevState.abilitiesCollection[index].Player1, newAbilityObj] : [...prevState.abilitiesCollection[index].Player1],
+          'Player2': abilityFormInput.Player2 ? [...prevState.abilitiesCollection[index].Player2, newAbilityObj] : [...prevState.abilitiesCollection[index].Player2],
+          'Player3': abilityFormInput.Player3 ? [...prevState.abilitiesCollection[index].Player3, newAbilityObj] : [...prevState.abilitiesCollection[index].Player3],
+          'Player4': abilityFormInput.Player4 ? [...prevState.abilitiesCollection[index].Player4, newAbilityObj] : [...prevState.abilitiesCollection[index].Player4],
+          'Player5': abilityFormInput.Player5 ? [...prevState.abilitiesCollection[index].Player5, newAbilityObj] : [...prevState.abilitiesCollection[index].Player5],
+          'Player6': abilityFormInput.Player6 ? [...prevState.abilitiesCollection[index].Player6, newAbilityObj] : [...prevState.abilitiesCollection[index].Player6],
+          'Player7': abilityFormInput.Player7 ? [...prevState.abilitiesCollection[index].Player7, newAbilityObj] : [...prevState.abilitiesCollection[index].Player7],
+          'Player8': abilityFormInput.Player8 ? [...prevState.abilitiesCollection[index].Player8, newAbilityObj] : [...prevState.abilitiesCollection[index].Player8],
+        }
+      }
+    }))
   }
 
   const childrenAmount = Array(fightState['fightDuration']).fill(1)
@@ -125,7 +154,7 @@ const Timeline = () => {
         />))}
       <br/>
       <br/>
-      <AbilitiesBucket fightDuration={fightState['fightDuration']} partyAttributes={fightState['partyAttributes']} abilitiesCollection={fightState['abilitiesCollection']}/>
+      <AbilitiesBucket fightDuration={fightState['fightDuration']} partyAttributes={fightState['partyAttributes']} abilitiesCollection={fightState['abilitiesCollection']} onSubmit={handleAddAbilitySubmit}/>
       <br/>
       <HpBucket fightState={fightState}/>
     </div>

@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react'
 
 
-const Ability = ({id, caster, name}) => {
+const Ability = ({activeAbilitiesPerSec, caster, name, onSubmit}) => {
   const [checked, setChecked] = React.useState(false);
 
   const handleChange = () => {
@@ -10,13 +10,12 @@ const Ability = ({id, caster, name}) => {
   
   return (
     <Fragment>
-      <label> {caster}'s {name}
-        <input
-          type="checkbox"
-          checked={checked}
-          onChange={handleChange}
-        />
-    </label>
+      <label> {caster}'s {name} </label>
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={handleChange}
+      />
     &nbsp; 
   </Fragment>
   )
