@@ -4,7 +4,6 @@ import DamageModal from './DamageModal';
 // REMEMBER. DAMAGE IS -ALL- SOURCES OF DAMAGE A SECOND. 
 
 const Damage = ({id, damagesAtSec, onSubmit}) => {
-  const [damageThisSecond, setDamageThisSecond] = useState({});
   const damageList = new Set([]);
 
 
