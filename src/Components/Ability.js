@@ -22,6 +22,7 @@ const Ability = ({second, metaData, caster, name, abilityToggle}) => {
         checked={checked}
         onChange={handleChange}
       />
+      <label>{status}</label>
     &nbsp; 
   </Fragment>
   )

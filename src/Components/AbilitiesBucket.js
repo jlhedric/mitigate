@@ -18,26 +18,72 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
 
   const handleAbilityToggle = (caster, name, second, isToggledOn) => {
     const ability = test_cases[name]
-    let effectEndsAt = second
+    let effectEndsAt = second 
     if ('mits' in ability && ability['mits'].length) {
       //TODO: figure out how to show different durations or pick one 'master' duration
-      effectEndsAt = (second + ability['mits'][0]['duration'] < fightDuration) ? second + ability['mits'][0]['duration'] : fightDuration 
+      effectEndsAt = second + ability['mits'][0]['duration']
     }
-    const offCooldownSecond = (second + ability['recast'] < fightDuration) ? second + ability['recast'] : fightDuration
-    console.log(second, effectEndsAt, offCooldownSecond)
-    
-    // [second, second]: casted
-    // (second, recast): cooldown
-    // [second, duration]: active (if mit)
+    const offCooldownAt = second + ability['recast']
     // prio: casted > active > stacks > cooldown
 
-    // setAbilitiesStatus((prevState) => {
-    //   for(let sec = second; sec <= offCooldownSecond; sec++) {
-    //     console.log(sec)
-    //   }
-    //   console.log('test')
-    //   return {...prevState}
-    // })
+    setAbilitiesStatus((prevState) => {
+      let changes = {}
+      for(let sec = second-1; sec+1 <= ((offCooldownAt <= fightDuration) ? offCooldownAt : fightDuration); sec++) {
+        if(isToggledOn) {
+          // TODO: stacks
+          if(sec+1 < offCooldownAt) {
+            changes = {...changes,
+              [sec]: {
+                ...prevState[sec],
+                [caster]: {
+                  ...prevState[sec][caster],
+                  [name]: {'status': 'cooldown'}
+                }
+              }
+            }
+          }
+          if(sec+1 < effectEndsAt) {
+            changes = {...changes, 
+              [sec]: {
+                ...prevState[sec],
+                [caster]: {
+                  ...prevState[sec][caster],
+                  [name]: {'status': 'active'}
+                }
+              }
+            }
+          }
+          if(sec+1 === second) {
+            changes = {...changes, 
+              [sec]: {
+                ...prevState[sec],
+                [caster]: {
+                  ...prevState[sec][caster],
+                  [name]: {'status': 'casted'}
+                }
+              }
+            }
+          }
+        }
+        else{
+          if(sec+1 < offCooldownAt) {
+            changes = {...changes,
+              [sec]: {
+                ...prevState[sec],
+                [caster]: {
+                  ...prevState[sec][caster],
+                  [name]: {'status': 'ready'}
+                }
+              }
+            }
+          }
+        }
+      }
+      return {
+        ...prevState, ...changes
+
+      }
+    })
 
 
     // onChange();  TODO: Send fightState vals
