@@ -1,24 +1,27 @@
 import React, {Fragment} from 'react'
 
 
-const Ability = ({caster, name, onSubmit}) => {
-  const [checked, setChecked] = React.useState(false);
+const Ability = ({second, metaData, caster, name, abilityToggle}) => {
+  const status = metaData['status']
+  let initialVal = false;
+  if(status === 'casted') {
+    initialVal = true
+  }
+  const [checked, setChecked] = React.useState(initialVal);
 
-  const handleChange = (e) => {
-    console.log(caster, name)
+  const handleChange = () => {
     setChecked(!checked);
+    abilityToggle(caster, name, second, !checked)
   };
   
   return (
     <Fragment>
       <label> {caster}'s {name} </label>
-      <form onSubmit={onSubmit}>
-        <input
-          type="checkbox"
-          checked={checked}
-          onChange={handleChange}
-        />
-        </form>
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={handleChange}
+      />
     &nbsp; 
   </Fragment>
   )

@@ -37,9 +37,9 @@ const test_cases = {
         'magic': 0,
         'physical': .15
       },
-      'duration': 10,
+      'duration': 1,
     }],
-    'recast': 90,
+    'recast': 2,
   },
   // 'divine veil': {
   //   'shields': [{
