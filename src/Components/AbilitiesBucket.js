@@ -8,7 +8,13 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
   const result = {}
   for (const player in partyAttributes){
     result[player] = {}
-    partyAttributes[player]['abilities'].forEach((ability) => (result[player][ability] = {status: 'ready'}))
+    partyAttributes[player]['abilities'].forEach((ability) => (result[player][ability] = {
+      status: 'ready', 
+      stacks: {
+        maxStacks: ('stacks' in test_cases[ability]) ? test_cases[ability]['stacks'] : 1, 
+        currStacks: ('stacks' in test_cases[ability]) ? test_cases[ability]['stacks'] : 1
+      }
+    }))
   }
   duration.forEach((_, second) => {
     initialState[[second]] = result
@@ -16,28 +22,37 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
   
   const [abilitiesStatus, setAbilitiesStatus] = useState(initialState)
 
-  const handleAbilityToggle = (caster, name, second, isToggledOn) => {
+  const handleAbilityToggle = (caster, name, metaData, second, isToggledOn, target) => {
     const ability = test_cases[name]
     let effectEndsAt = second 
     if ('mits' in ability && ability['mits'].length) {
       //TODO: figure out how to show different durations or pick one 'master' duration
       effectEndsAt = second + ability['mits'][0]['duration']
     }
-    const offCooldownAt = second + ability['recast']
-    // prio: casted > active > stacks > cooldown
+    const hasStacks = 'stacks' in test_cases[name]
+    const offCooldownAt = second + test_cases[name]['recast'];
 
+    // status prio: invalid > casted > active > ready > stacksAvail > cooldown
     setAbilitiesStatus((prevState) => {
       let changes = {}
       for(let sec = second-1; sec+1 <= ((offCooldownAt <= fightDuration) ? offCooldownAt : fightDuration); sec++) {
+        let numStacks = 1
         if(isToggledOn) {
-          // TODO: stacks
+          if (hasStacks) {
+            numStacks = prevState[sec][caster][name]['stacks']['currStacks'] - 1
+          }
           if(sec+1 < offCooldownAt) {
             changes = {...changes,
               [sec]: {
                 ...prevState[sec],
                 [caster]: {
                   ...prevState[sec][caster],
-                  [name]: {'status': 'cooldown'}
+                  [name]: {
+                    'stacks': {
+                      ...prevState[sec][caster][name]['stacks'],
+                      'currStacks': numStacks
+                    },
+                    'status': (numStacks > 0 && hasStacks) ? 'stacksAvail' : 'cooldown'}
                 }
               }
             }
@@ -48,7 +63,12 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
                 ...prevState[sec],
                 [caster]: {
                   ...prevState[sec][caster],
-                  [name]: {'status': 'active'}
+                  [name]: {
+                    'stacks': {
+                      ...prevState[sec][caster][name]['stacks'],
+                      'currStacks': numStacks
+                    },
+                    'status': 'active'}
                 }
               }
             }
@@ -59,20 +79,33 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
                 ...prevState[sec],
                 [caster]: {
                   ...prevState[sec][caster],
-                  [name]: {'status': 'casted'}
+                  [name]: {
+                    'stacks': {
+                      ...prevState[sec][caster][name]['stacks'],
+                      'currStacks': numStacks
+                    },
+                    'status': 'casted'}
                 }
               }
             }
           }
         }
-        else{
+        else {
+          if (hasStacks) {
+            numStacks = Math.min(prevState[sec][caster][name]['stacks']['currStacks'] + 1, prevState[sec][caster][name]['stacks']['maxStacks'])
+          }
           if(sec+1 < offCooldownAt) {
             changes = {...changes,
               [sec]: {
                 ...prevState[sec],
                 [caster]: {
                   ...prevState[sec][caster],
-                  [name]: {'status': 'ready'}
+                  [name]: {
+                    'stacks': {
+                      ...prevState[sec][caster][name]['stacks'],
+                      'currStacks': numStacks
+                    },
+                    'status': (numStacks < prevState[sec][caster][name]['stacks']['maxStacks'] && hasStacks) ? 'stacksAvail' : 'ready'}
                 }
               }
             }
@@ -87,6 +120,13 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
 
 
     // onChange();  TODO: Send fightState vals
+  }
+
+  const addressErrors = () => {}
+
+  // wont be running this if max < 2
+  const computeStacks = (max, curr, difference) => {
+    return Math.min(curr + difference, max)
   }
 
   return (

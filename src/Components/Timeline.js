@@ -16,16 +16,30 @@ const tempDefaultAbilities = { 'Player1': [], 'Player2': [], 'Player3': [], 'Pla
 
 const Timeline = () => {
   const [fightState, setFightState] = useState({
-    'fightDuration': 3,
+    'fightDuration': 10,
     'hpCollection': {
       0: tempDefaultHpJson,
       1: tempDefaultHpJson,
-      2: tempDefaultHpJson
+      2: tempDefaultHpJson,
+      3: tempDefaultHpJson,
+      4: tempDefaultHpJson,
+      5: tempDefaultHpJson,
+      6: tempDefaultHpJson,
+      7: tempDefaultHpJson,
+      8: tempDefaultHpJson,
+      9: tempDefaultHpJson,
     },
     'damageCollection': {
       0: tempDefaultDamageJson,
       1: tempDefaultDamageJson,
-      2: tempDefaultDamageJson
+      2: tempDefaultDamageJson,
+      3: tempDefaultDamageJson,
+      4: tempDefaultDamageJson,
+      5: tempDefaultDamageJson,
+      6: tempDefaultDamageJson,
+      7: tempDefaultDamageJson,
+      8: tempDefaultDamageJson,
+      9: tempDefaultDamageJson,
     },
     'abilitiesCollection': {
       0: tempDefaultAbilities,
@@ -143,7 +157,7 @@ const Timeline = () => {
       <br />
       <PartyModal onSubmit={handleCreatePartySubmit} />
       <br />
-      <br />
+      {/* <br />
       {childrenAmount.map((_, index) => (
         <Damage
           key={index}
@@ -151,7 +165,7 @@ const Timeline = () => {
           damagesAtSec={fightState['damageCollection'][index]}
           onSubmit={handleAddDamageSubmit}
         />))}
-      <br />
+      <br /> */}
       <br />
       <AbilitiesBucket
         fightDuration={fightState['fightDuration']}

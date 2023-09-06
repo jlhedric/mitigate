@@ -1,7 +1,7 @@
 const JOBS = {
-  "pld":['sentinel'],
+  "pld":[],
   "war":[],
-  "drk":['bulwark', 'sentinel'],
+  "drk":['oblation'],
   "gnb":[],
   "whm":[],
   "ast":[],
@@ -127,18 +127,18 @@ const test_cases = {
   //   'isTankInvuln': true,
   //   'recast': 300
   // },
-  // 'oblation': {
-  //   'mits': [{
-  //     'amount': {
-  //       'magic': .1,
-  //       'physical': .1
-  //     },
-  //     'duration': 10,
-  //     'target': 'single',
-  //   }],
-  //   'recast': 60,
-  //   'stacks': 2
-  // },
+  'oblation': {
+    'mits': [{
+      'amount': {
+        'magic': .1,
+        'physical': .1
+      },
+      'duration': 2,
+      'target': 'single',
+    }],
+    'recast': 60,
+    'stacks': 3
+  },
   // 'thrill of battle': {
   //   'heals': [{
   //     'buff': 'thrill of battle',

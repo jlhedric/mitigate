@@ -11,7 +11,7 @@ const Ability = ({second, metaData, caster, name, abilityToggle}) => {
 
   const handleChange = () => {
     setChecked(!checked);
-    abilityToggle(caster, name, second, !checked)
+    abilityToggle(caster, name, metaData, second, !checked)
   };
   
   return (
