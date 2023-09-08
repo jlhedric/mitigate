@@ -133,11 +133,11 @@ const test_cases = {
         'magic': .1,
         'physical': .1
       },
-      'duration': 2,
+      'duration': 3,
       'target': 'single',
     }],
-    'recast': 60,
-    'stacks': 3
+    'recast': 3,
+    'stacks': 2
   },
   // 'thrill of battle': {
   //   'heals': [{

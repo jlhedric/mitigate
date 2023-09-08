@@ -22,7 +22,7 @@ const Ability = ({second, metaData, caster, name, abilityToggle}) => {
         checked={checked}
         onChange={handleChange}
       />
-      <label>{status}</label>
+      <label>{status} {metaData['stacks']['currStacks']}</label>
     &nbsp; 
   </Fragment>
   )

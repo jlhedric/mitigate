@@ -26,21 +26,23 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
     const ability = test_cases[name]
     let effectEndsAt = second 
     if ('mits' in ability && ability['mits'].length) {
-      //TODO: figure out how to show different durations or pick one 'master' duration
+      //TODO: define one 'master' duration
       effectEndsAt = second + ability['mits'][0]['duration']
     }
     const hasStacks = 'stacks' in test_cases[name]
     const offCooldownAt = second + test_cases[name]['recast'];
 
-    // status prio: invalid > casted > active > ready > stacksAvail > cooldown
+    // status prio: invalid > casted > active > ready > stacksAvail = cooldown
     setAbilitiesStatus((prevState) => {
       let changes = {}
       for(let sec = second-1; sec+1 <= ((offCooldownAt <= fightDuration) ? offCooldownAt : fightDuration); sec++) {
+        const prevStatus = prevState[sec][caster][name]['status'];
         let numStacks = 1
         if(isToggledOn) {
           if (hasStacks) {
             numStacks = prevState[sec][caster][name]['stacks']['currStacks'] - 1
           }
+          // set to stacksAvail or cooldown if not an active cast
           if(sec+1 < offCooldownAt) {
             changes = {...changes,
               [sec]: {
@@ -52,11 +54,12 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
                       ...prevState[sec][caster][name]['stacks'],
                       'currStacks': numStacks
                     },
-                    'status': (numStacks > 0 && hasStacks) ? 'stacksAvail' : 'cooldown'}
+                    'status': (prevStatus === 'casted' || prevStatus === 'active') ? prevStatus : (numStacks > 0 && hasStacks) ? 'stacksAvail' : 'cooldown'}
                 }
               }
             }
           }
+          // set to active if not a stack ability or a cast, or stack/cd status otherwise
           if(sec+1 < effectEndsAt) {
             changes = {...changes, 
               [sec]: {
@@ -68,11 +71,12 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
                       ...prevState[sec][caster][name]['stacks'],
                       'currStacks': numStacks
                     },
-                    'status': 'active'}
+                    'status': (prevStatus === 'casted') ? prevStatus : (!hasStacks) ? 'active' : (numStacks > 0 && hasStacks) ? 'stacksAvail' : 'cooldown'}
                 }
               }
             }
           }
+          // the checkbox being selected. highest priority, shouldn't be overwritten by any other state except an error
           if(sec+1 === second) {
             changes = {...changes, 
               [sec]: {
@@ -94,6 +98,7 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
           if (hasStacks) {
             numStacks = Math.min(prevState[sec][caster][name]['stacks']['currStacks'] + 1, prevState[sec][caster][name]['stacks']['maxStacks'])
           }
+          const isSeparateCast = (prevStatus === 'casted' && sec+1 !== second)
           if(sec+1 < offCooldownAt) {
             changes = {...changes,
               [sec]: {
@@ -105,7 +110,7 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
                       ...prevState[sec][caster][name]['stacks'],
                       'currStacks': numStacks
                     },
-                    'status': (numStacks < prevState[sec][caster][name]['stacks']['maxStacks'] && hasStacks) ? 'stacksAvail' : 'ready'}
+                    'status': (isSeparateCast) ? prevStatus : (numStacks < prevState[sec][caster][name]['stacks']['maxStacks'] && hasStacks) ? 'stacksAvail' : 'ready'}
                 }
               }
             }
