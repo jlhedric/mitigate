@@ -26,8 +26,7 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
     const ability = test_cases[name]
     let effectEndsAt = second 
     if ('mits' in ability && ability['mits'].length) {
-      //TODO: define one 'master' duration
-      effectEndsAt = second + ability['mits'][0]['duration']
+      effectEndsAt = second + ability['duration']
     }
     const hasStacks = 'stacks' in test_cases[name]
     const offCooldownAt = second + test_cases[name]['recast'];

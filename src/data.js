@@ -1,7 +1,7 @@
 const JOBS = {
   "pld":[],
   "war":[],
-  "drk":['oblation'],
+  "drk":['oblation', 'sentinel'],
   "gnb":[],
   "whm":[],
   "ast":[],
@@ -30,6 +30,8 @@ const test_cases = {
       'duration': 2,
     }],
     'recast': 4,
+    'duration': 2,   //NEW
+    'target': 'self' //NEW
   },
   'bulwark': {
     'mits': [{
@@ -40,6 +42,8 @@ const test_cases = {
       'duration': 1,
     }],
     'recast': 2,
+    'duration': 1,    //NEW
+    'target': 'self'  //NEW
   },
   // 'divine veil': {
   //   'shields': [{
@@ -137,7 +141,9 @@ const test_cases = {
       'target': 'single',
     }],
     'recast': 3,
-    'stacks': 2
+    'stacks': 2,
+    'duration': 3,      //NEW
+    'target': 'single'  //NEW
   },
   // 'thrill of battle': {
   //   'heals': [{
