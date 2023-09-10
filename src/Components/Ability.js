@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import AbilityModalContent from './AbilityModalContent';
 
 
-const Ability = ({second, metaData, partyList, caster, name, targetType, abilityToggle}) => {
+const Ability = ({second, metaData, partyAttributes, caster, name, targetType, abilityToggle}) => {
   const status = metaData['status']
   let initialVal = false;
   if(status === 'casted') {
@@ -52,7 +52,7 @@ const AbilityCheckbox = () => {
       {showModal && createPortal(
         <AbilityModalContent 
           onClose={() => setShowModal(false)}
-          partyList={partyList}
+          partyAttributes={partyAttributes}
           caster={caster} 
           name={name}
           targetType={targetType}

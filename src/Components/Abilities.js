@@ -18,7 +18,7 @@ const Abilities = ({id, partyAttributes, abilitiesStatus, abilityToggle}) => {
           key={player + '_' + ability}
           second={id+1}
           metaData={abilitiesStatus[player][ability]}
-          partyList={players}
+          partyAttributes={partyAttributes}
           caster={player} 
           name={ability} 
           targetType={test_cases[ability]['target']}
