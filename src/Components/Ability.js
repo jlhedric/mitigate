@@ -18,14 +18,13 @@ const Ability = ({second, metaData, partyAttributes, caster, name, targetType, a
   };
 
   const handleModalChange = () => {
-    setChecked(!checked);
     if(!checked) {
       setShowModal(true)
     }
   }
 
 const AbilityCheckbox = () => {
-  if(targetType === 'self') {   //TODO: check more than just targets
+  if(['self', 'all', 'allButSelf'].includes(targetType)) {   //TODO: check more than just targets
     return (
       <input
           type="checkbox"
@@ -57,6 +56,7 @@ const AbilityCheckbox = () => {
           name={name}
           targetType={targetType}
           onSubmit={abilityToggle}
+          checked={checked}
         />,
         document.body
       )}
