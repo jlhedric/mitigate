@@ -170,8 +170,7 @@ const Timeline = () => {
       <AbilitiesBucket
         fightDuration={fightState['fightDuration']}
         partyAttributes={fightState['partyAttributes']}
-        onChange={handleAbilityToggle
-        } />
+        onChange={handleAbilityToggle} />
       <br />
       <HpBucket fightState={fightState} />
     </div>

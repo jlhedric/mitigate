@@ -13,7 +13,7 @@ const AbilityModalContent = ({ onClose, partyAttributes, caster, name, targetTyp
           <label key={player}>{partyAttributes[player]['job']} 
             <input 
               type='radio' 
-              name='targets'
+              name='abilityTarget'
               defaultChecked={false} />
           </label>
         ))
@@ -40,7 +40,7 @@ const AbilityModalContent = ({ onClose, partyAttributes, caster, name, targetTyp
               <label key={player}>{partyAttributes[player]['job']} 
                 <input 
                   type='radio' 
-                  name='targets'  
+                  name='abilityTarget'  
                   defaultChecked={false}
                   value={player}
                 />

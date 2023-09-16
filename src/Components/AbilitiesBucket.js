@@ -22,7 +22,7 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
   
   const [abilitiesStatus, setAbilitiesStatus] = useState(initialState)
 
-  const handleAbilityToggle = (caster, name, metaData, second, isToggledOn, target) => {
+  const handleAbilityToggle = (caster, name, metaData, second, isToggledOn, targets) => {
     const ability = test_cases[name]
     let effectEndsAt = second 
     if ('mits' in ability && ability['mits'].length) {
@@ -123,7 +123,7 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
     })
 
 
-    // onChange();  TODO: Send fightState vals
+    console.log('beeeeeep')
   }
 
   const addressErrors = () => {}

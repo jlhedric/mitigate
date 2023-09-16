@@ -12,20 +12,27 @@ const Ability = ({second, metaData, partyAttributes, caster, name, targetType, a
   const [checked, setChecked] = React.useState(initialVal);
   const [showModal, setShowModal] = React.useState(false);
 
-  const handleChange = () => {
+  const handleChange = (targets=[]) => {
     setChecked(!checked);
-    abilityToggle(caster, name, metaData, second, !checked)
+    abilityToggle(caster, name, metaData, second, !checked, targets)
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const abilitySettingsFormInput = Object.fromEntries(new FormData(e.target).entries())
-    handleChange();
+    let targets = [abilitySettingsFormInput.abilityTarget]
+    if(targetType === 'partner') {
+      targets.push(caster)
+    }
+    handleChange(targets);
   }
 
   const handleModalChange = () => {
     if(!checked) {
       setShowModal(true)
+    }
+    else {
+      handleChange();
     }
   }
 
