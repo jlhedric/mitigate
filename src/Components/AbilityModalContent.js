@@ -4,7 +4,21 @@ import React from 'react'
 
 
 const AbilityModalContent = ({ onClose, partyAttributes, caster, name, targetType, onSubmit}) => {
+  let initialVal = new Set();
+  if(['self', 'partner'].includes(targetType)) {
+    initialVal.add(caster)
+  }
+  const [targetList, setTargetList] = React.useState(initialVal)
   const players = Object.keys(partyAttributes)
+
+  const handleChange = (e) => {
+    const target = e.target.name
+    setTargetList((prevState) => {
+      let newTargets = prevState
+      // newTargets.add(target) ? e.target.checked : newTargets.delete(target) DOESNT WORK FOR SINGLE
+      return newTargets
+    })
+  };
 
   const TargetInput = () => {
     // TODO: figure out target counts? also how to set caster as immutable option
@@ -16,7 +30,7 @@ const AbilityModalContent = ({ onClose, partyAttributes, caster, name, targetTyp
               <label key={player}>{partyAttributes[player]['job']} 
                 <input 
                   type='checkbox' 
-                  name={caster} 
+                  name={player} 
                   defaultChecked={true}
                   disabled
                 />
@@ -28,8 +42,9 @@ const AbilityModalContent = ({ onClose, partyAttributes, caster, name, targetTyp
               <label key={player}>{partyAttributes[player]['job']} 
                 <input 
                   type='radio' 
-                  name={caster} 
+                  name={player} 
                   defaultChecked={false}
+                  onChange={handleChange}
                 />
               </label>
             )
@@ -45,7 +60,7 @@ const AbilityModalContent = ({ onClose, partyAttributes, caster, name, targetTyp
               <label key={player}>{partyAttributes[player]['job']} 
                 <input 
                   type='radio' 
-                  name={caster} 
+                  name={player} 
                   defaultChecked={false}
                   disabled
                 />
@@ -57,8 +72,9 @@ const AbilityModalContent = ({ onClose, partyAttributes, caster, name, targetTyp
               <label key={player}>{partyAttributes[player]['job']} 
                 <input 
                   type='radio' 
-                  name={caster} 
+                  name={player} 
                   defaultChecked={false}
+                  onChange={handleChange}
                 />
               </label>
             )
@@ -72,8 +88,9 @@ const AbilityModalContent = ({ onClose, partyAttributes, caster, name, targetTyp
           <label key={player}>{partyAttributes[player]['job']} 
             <input 
               type='radio' 
-              name={caster} 
-              defaultChecked={false}/>
+              name='targets'
+              defaultChecked={false}
+              onChange={handleChange}/>
           </label>
         ))
       )

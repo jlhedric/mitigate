@@ -17,6 +17,12 @@ const Ability = ({second, metaData, partyAttributes, caster, name, targetType, a
     abilityToggle(caster, name, metaData, second, !checked)
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const abilitySettingsFormInput = Object.fromEntries(new FormData(e.target).entries())
+    handleChange();
+  }
+
   const handleModalChange = () => {
     if(!checked) {
       setShowModal(true)
@@ -55,7 +61,7 @@ const AbilityCheckbox = () => {
           caster={caster} 
           name={name}
           targetType={targetType}
-          onSubmit={abilityToggle}
+          onSubmit={handleSubmit}
           checked={checked}
         />,
         document.body
