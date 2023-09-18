@@ -122,16 +122,12 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
       }
     })
 
-
-    console.log('beeeeeep')
+    onChange(caster, ability, second, isToggledOn, targets);
   }
 
   const addressErrors = () => {}
 
-  // wont be running this if max < 2
-  const computeStacks = (max, curr, difference) => {
-    return Math.min(curr + difference, max)
-  }
+
 
   return (
     <span>

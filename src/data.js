@@ -143,7 +143,7 @@ const test_cases = {
     'recast': 3,
     'stacks': 2,
     'duration': 3,      //NEW
-    'target': 'self'  //NEW
+    'target': 'single'  //NEW
   },
   // 'thrill of battle': {
   //   'heals': [{

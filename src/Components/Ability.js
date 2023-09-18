@@ -12,7 +12,7 @@ const Ability = ({second, metaData, partyAttributes, caster, name, targetType, a
   const [checked, setChecked] = React.useState(initialVal);
   const [showModal, setShowModal] = React.useState(false);
 
-  const handleChange = (targets=[]) => {
+  const handleChange = (_, targets=[]) => {
     setChecked(!checked);
     abilityToggle(caster, name, metaData, second, !checked, targets)
   };
@@ -24,7 +24,7 @@ const Ability = ({second, metaData, partyAttributes, caster, name, targetType, a
     if(targetType === 'partner') {
       targets.push(caster)
     }
-    handleChange(targets);
+    handleChange(e, targets);
   }
 
   const handleModalChange = () => {

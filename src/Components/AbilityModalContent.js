@@ -14,7 +14,8 @@ const AbilityModalContent = ({ onClose, partyAttributes, caster, name, targetTyp
             <input 
               type='radio' 
               name='abilityTarget'
-              defaultChecked={false} />
+              defaultChecked={false} 
+              value={player}/>
           </label>
         ))
       )
