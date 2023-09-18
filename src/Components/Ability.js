@@ -37,7 +37,7 @@ const Ability = ({second, metaData, partyAttributes, caster, name, targetType, a
   }
 
 const AbilityCheckbox = () => {
-  if(['self', 'all', 'allButSelf'].includes(targetType)) {   //TODO: check more than just targets
+  if(['self', 'all', 'allies'].includes(targetType)) {   //TODO: check more than just targets
     return (
       <input
           type="checkbox"

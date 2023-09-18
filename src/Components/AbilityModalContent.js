@@ -1,6 +1,6 @@
 import React from 'react'
 
-//self, single, all, partner, anyButSelf, allButSelf
+//self, single, all, partner, ally, allies
 
 
 const AbilityModalContent = ({ onClose, partyAttributes, caster, name, targetType, onSubmit}) => {

@@ -1,7 +1,7 @@
 const JOBS = {
   "pld":[],
   "war":[],
-  "drk":['oblation', 'sentinel'],
+  "drk":['nascent flash'],
   "gnb":[],
   "whm":[],
   "ast":[],
@@ -64,19 +64,19 @@ const test_cases = {
   //       'physical': .1
   //     },
   //     'duration': 8,
-  //     'target': 'anyButSelf'
+  //     'target': 'ally'
   //   }, {
   //     'amount': {
   //       'magic': .1,
   //       'physical': .1
   //     },
   //     'duration': 4,
-  //     'target': 'anyButSelf'
+  //     'target': 'ally'
   //   }],
   //   'heals': [{
   //     'potency': 250,
   //     'duration': 12,
-  //     'target': 'anyButSelf'
+  //     'target': 'ally'
   //   }],
   //   'recast': 10,
   //   'buffedBy': [{
@@ -86,14 +86,14 @@ const test_cases = {
   //           'magic': .1,
   //           'physical': .1},
   //         'duration': 8,
-  //         'target': 'anyButSelf'}]},
+  //         'target': 'ally'}]},
   //     'sentinel': {
   //       'mits': [{
   //         'amount': {
   //           'magic': .1,
   //           'physical': .1},
   //         'duration': 8,
-  //         'target': 'anyButSelf'}]} 
+  //         'target': 'ally'}]} 
   //   },],
   // },
   // 'passage of arms': {
@@ -108,7 +108,7 @@ const test_cases = {
   //       'physical': .15
   //     },
   //     'duration': 3, //channelDuration + 3
-  //     'target': 'allButSelf'
+  //     'target': 'allies'
 
   //   }],
   //   'recast': 120,
@@ -223,6 +223,37 @@ const test_cases = {
   //   'recast': 25,
   //   'sharesRecastTimerWith': ['nascent flash']
   // },
+  'nascent flash': {
+    'mits': [{
+      'amount': {
+        'magic': .1,
+        'physical': .1
+      },
+      'duration': 8,
+      'target': 'ally'
+    }, {
+      'amount': {
+        'magic': .1,
+        'physical': .1
+      },
+      'duration': 4,
+      'target': 'ally'
+    }],
+    'shields': [{
+      'duration': 20,
+      'target': 'ally',
+      'scaling': {'potency': 400}
+    }],
+    'heals': [{
+      'potency': 400,
+      'duration': 8,
+      'target': 'partner'
+    }],
+    'recast': 25,
+    'sharesRecastTimerWith': ['bloodwhetting'],
+    'duration': 8,
+    'target': 'ally'
+  },
   // 'tactition': {
   //   'mits': [{
   //     'amount': {

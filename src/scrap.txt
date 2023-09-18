@@ -287,7 +287,7 @@ ability name {
     potency: number,
     percentage: percentage
     duration: number (for regens, delays, shields),
-    target: single/all/selfPlusOne/anyButSelf/allButSelf
+    target: self/single/all/partner/ally/allies
     isIncreaseMaxHP: bool,
     hasHpTrigger: percentage
     noStackWith: [ability]
@@ -300,7 +300,7 @@ ability name {
       physical: percent
     },
     duration: number,
-    target: single/all/selfPlusOne/anyButSelf/allButSelf,
+    target: single/all/selfPlusOne/ally/allies,
     isDebuff: bool
     noStackWith: [ability]
 
@@ -308,7 +308,7 @@ ability name {
   shields {[
     buff: string (really just for bloodwhetting, adlo)
     duration: number,
-    target: single/all/selfPlusOne/anyButSelf/allButSelf
+    target: single/all/selfPlusOne/ally/allies
     scaling: potency: number, selfHp: percent casterHp: percent healed: number? percent?
     noStackWith: [ability]
 
@@ -327,6 +327,8 @@ ability name {
   buffedBy: {ability: mits: heals: ... isConsumed: bool}
   'stackTrigger': hploss, shieldbreak
   unusedStackEffect: {heals: ... mits... shields...}
+  duration: number
+  target: number
 }
 
 attributes:
