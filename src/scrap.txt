@@ -316,7 +316,7 @@ ability name {
   recast: number
   castSecond: number
   castDuration: number
-  castBy: player
+  source: player
   channel: {channelDuration: number, interval: number, effects: {heals, mits...}}
   isTankInvuln: bool
   isGcd: bool (for the purposes of gcd only buffs)

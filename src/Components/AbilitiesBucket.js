@@ -5,10 +5,11 @@ import {test_cases} from '../data'
 const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
   const duration = Array(fightDuration).fill(1)
   const initialState = {}
-  const result = {}
+  let initialResult = {}
+  // builds the initial state of ability checkboxes
   for (const player in partyAttributes){
-    result[player] = {}
-    partyAttributes[player]['abilities'].forEach((ability) => (result[player][ability] = {
+    initialResult[player] = {}
+    partyAttributes[player]['abilities'].forEach((ability) => (initialResult[player][ability] = {
       status: 'ready', 
       stacks: {
         maxStacks: ('stacks' in test_cases[ability]) ? test_cases[ability]['stacks'] : 1, 
@@ -17,24 +18,24 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
     }))
   }
   duration.forEach((_, second) => {
-    initialState[[second]] = result
+    initialState[[second]] = initialResult
   });
   
   const [abilitiesStatus, setAbilitiesStatus] = useState(initialState)
 
-  const handleAbilityToggle = (caster, name, metaData, second, isToggledOn, targets) => {
+  const handleAbilityToggle = (caster, name, metaData, startingSecond, isToggledOn, targets) => {
     const ability = test_cases[name]
-    let effectEndsAt = second 
+    let effectEndsAt = startingSecond 
     if ('mits' in ability && ability['mits'].length) {
-      effectEndsAt = second + ability['duration']
+      effectEndsAt = startingSecond + ability['duration']
     }
     const hasStacks = 'stacks' in test_cases[name]
-    const offCooldownAt = second + test_cases[name]['recast'];
+    const offCooldownAt = startingSecond + test_cases[name]['recast'];
 
     // status prio: invalid > casted > active > ready > stacksAvail = cooldown
     setAbilitiesStatus((prevState) => {
       let changes = {}
-      for(let sec = second-1; sec+1 <= ((offCooldownAt <= fightDuration) ? offCooldownAt : fightDuration); sec++) {
+      for(let sec = startingSecond-1; sec+1 <= ((offCooldownAt <= fightDuration) ? offCooldownAt : fightDuration); sec++) {
         const prevStatus = prevState[sec][caster][name]['status'];
         let numStacks = 1
         if(isToggledOn) {
@@ -76,7 +77,7 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
             }
           }
           // the checkbox being selected. highest priority, shouldn't be overwritten by any other state except an error
-          if(sec+1 === second) {
+          if(sec+1 === startingSecond) {
             changes = {...changes, 
               [sec]: {
                 ...prevState[sec],
@@ -97,7 +98,7 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
           if (hasStacks) {
             numStacks = Math.min(prevState[sec][caster][name]['stacks']['currStacks'] + 1, prevState[sec][caster][name]['stacks']['maxStacks'])
           }
-          const isSeparateCast = (prevStatus === 'casted' && sec+1 !== second)
+          const isSeparateCast = (prevStatus === 'casted' && sec+1 !== startingSecond)
           if(sec+1 < offCooldownAt) {
             changes = {...changes,
               [sec]: {
@@ -122,7 +123,69 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
       }
     })
 
-    onChange(caster, ability, second, isToggledOn, targets);
+    let result = {}
+
+    if (isToggledOn) {
+      const commonAbilityAttrs = {
+        'castSecond': startingSecond-1,
+        'castBy': caster
+      }
+  
+      let maxEffect = 0
+      for(const buff of [ability['heals'], ability['mits'], ability['shields']].flat()) {
+        if(buff['duration'] > maxEffect) maxEffect = buff['duration']
+      }
+      // so we only have to iterate through the seconds once even with multiple buff timers
+      const effectedSeconds = Array.from({length: maxEffect}, (_, i) => i + startingSecond);
+  
+      for(let sec of effectedSeconds) {
+        // TODO: DYNAMIC PARTY SIZE
+        result[sec] = { 'Player1': {}, 'Player2': {}, 'Player3': {}, 'Player4': {}, 'Player5': {}, 'Player6': {}, 'Player7': {}, 'Player8': {} }
+        if('heals' in ability) {
+          for(const heal of ability['heals']) {
+            const buffTargetType = heal['target']
+            if(sec < heal['duration'] + startingSecond) {
+              console.log(heal, sec)
+              if(buffTargetType === 'self') {
+
+              }
+              if(buffTargetType === 'single') {
+
+              }
+              if(buffTargetType === 'partner') {
+
+              }
+              if(buffTargetType === 'all') {
+
+              }
+              if(buffTargetType === 'ally') {
+
+              }
+              if(buffTargetType === 'allies') {
+                
+              }
+            }
+          }
+        }
+        if('mits' in ability) {
+          for(const mit of ability['mits']) {
+            const buffTargetType = mit['target']
+            if(sec < mit['duration'] + startingSecond) console.log(mit, sec)
+          }
+        }
+        if('shields' in ability) {
+          for(const shield of ability['shields']) {
+            const buffTargetType = shield['target']
+            if(sec < shield['duration'] + startingSecond) console.log(shield, sec)
+          }
+        }
+      }
+
+    }
+    
+
+
+    onChange(caster, ability, startingSecond, isToggledOn, targets);
   }
 
   const addressErrors = () => {}
