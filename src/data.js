@@ -28,10 +28,11 @@ const test_cases = {
         'physical': .15
       },
       'duration': 2,
+      'target': 'self'
     }],
     'recast': 4,
     'duration': 2,   //NEW
-    'target': 'all' //NEW
+    'target': 'self' //NEW
   },
   'bulwark': {
     'mits': [{

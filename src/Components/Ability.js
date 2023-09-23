@@ -13,17 +13,8 @@ const Ability = ({second, metaData, partyAttributes, caster, name, targetType, a
   const [showModal, setShowModal] = React.useState(false);
 
   const handleChange = (_, targets=[]) => {
-    let copyTargets = targets
     setChecked(!checked);
-    if(!targets.length && targetType === 'all') {
-      copyTargets = copyTargets.concat(Object.keys(partyAttributes).map((player) => ({[player]: {[name]: {}}})))
-      abilityToggle(caster, name, metaData, second, !checked, copyTargets)
-    }
-
-    // define targets by buff
-    else {
-      abilityToggle(caster, name, metaData, second, !checked, copyTargets)
-    }
+    abilityToggle(caster, name, metaData, second, !checked, targets)
   };
 
   const handleSubmit = (e) => {

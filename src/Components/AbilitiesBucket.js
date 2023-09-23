@@ -4,6 +4,7 @@ import {test_cases} from '../data'
 
 const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
   const duration = Array(fightDuration).fill(1)
+  const players = Object.keys(partyAttributes)
   const initialState = {}
   let initialResult = {}
   // builds the initial state of ability checkboxes
@@ -24,6 +25,69 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
   const [abilitiesStatus, setAbilitiesStatus] = useState(initialState)
 
   const handleAbilityToggle = (caster, name, metaData, startingSecond, isToggledOn, targets) => {
+    // flatten out the buffs an ability gives
+    const combineBuffs = (...arrays) => [].concat(...arrays.filter(Array.isArray));
+
+    // figure out the target of a specific buff and return an array of names
+    const defineTargets = (caster, buffTargetType, targets) => {
+      const buffTargets = []
+      if(buffTargetType === 'self') {
+        buffTargets.push(caster)
+      }
+      if(['single', 'ally', 'partner'].includes(buffTargetType)) {
+        buffTargets.push(targets[0])
+      }
+      if(buffTargetType === 'partner') {
+        buffTargets.push(caster)
+      }
+      if(buffTargetType === 'all') {
+        buffTargets.push(...players)
+      }
+      if(buffTargetType === 'allies') {
+        buffTargets.push(...players.filter((player) => player !== caster))
+      }
+      return buffTargets
+    }
+
+    const buildResultByBuffType = (buffType, ability, currSecond, startingSecond, caster, abilityName, result, targets) => {
+      /**
+       * Builds a result object with the buffs of a specific type.
+       *
+       * @param {string} buffType - The type of buffs to process. The types are: heals, mits, shields.
+       * @param {Object} ability - The ability object containing the buff information.
+       * @param {number} currSecond - The current second of THE FIGHT.
+       * @param {number} startingSecond - The starting second of the ability's effects.
+       * @param {string} caster - The caster of the ability.
+       * @param {string} abilityName - The name of the ability.
+       * @param {Object} result - The result object to update with the processed buffs.
+       * @param {Object} targets - The user-selected target(s) for the ability. Currently, this is only ever 0, 1, or 2 players.
+       */
+      const commonAbilityAttrs = {
+        'castSecond': startingSecond-1, // is this needed?
+        'castBy': caster
+      }
+      if (buffType in ability) {
+        for (const buff of ability[buffType]) {
+          if (currSecond < buff['duration'] + startingSecond) {
+            const buffTargets = defineTargets(caster, buff['target'], targets);
+            for (const target of buffTargets) {
+              if (target in result[currSecond - 1]) {
+                if (buffType in result[currSecond - 1][target][abilityName]) {
+                  result[currSecond - 1][target][abilityName][buffType].push(buff);
+                } else {
+                  result[currSecond - 1][target][abilityName][buffType] = [buff];
+                }
+              } else {
+                result[currSecond - 1][target] = {
+                  [abilityName]: { ...commonAbilityAttrs, [buffType]: [buff] },
+                };
+              }
+            }
+          }
+        }
+      }
+    }
+
     const ability = test_cases[name]
     let effectEndsAt = startingSecond 
     if ('mits' in ability && ability['mits'].length) {
@@ -124,66 +188,24 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
     })
 
     let result = {}
-
-    if (isToggledOn) {
-      const commonAbilityAttrs = {
-        'castSecond': startingSecond-1,
-        'castBy': caster
-      }
-  
-      let maxEffect = 0
-      for(const buff of [ability['heals'], ability['mits'], ability['shields']].flat()) {
-        if(buff['duration'] > maxEffect) maxEffect = buff['duration']
-      }
-      // so we only have to iterate through the seconds once even with multiple buff timers
-      const effectedSeconds = Array.from({length: maxEffect}, (_, i) => i + startingSecond);
-  
-      for(let sec of effectedSeconds) {
-        // TODO: DYNAMIC PARTY SIZE
-        result[sec] = { 'Player1': {}, 'Player2': {}, 'Player3': {}, 'Player4': {}, 'Player5': {}, 'Player6': {}, 'Player7': {}, 'Player8': {} }
-        if('heals' in ability) {
-          for(const heal of ability['heals']) {
-            const buffTargetType = heal['target']
-            const buffTargets = []
-            if(sec < heal['duration'] + startingSecond) {
-              if(buffTargetType === 'self') {
-                result[sec][caster]
-              }
-              if(buffTargetType === 'single') {
-
-              }
-              if(buffTargetType === 'partner') {
-
-              }
-              if(buffTargetType === 'all') {
-
-              }
-              if(buffTargetType === 'ally') {
-
-              }
-              if(buffTargetType === 'allies') {
-                
-              }
-            }
-          }
-        }
-        if('mits' in ability) {
-          for(const mit of ability['mits']) {
-            const buffTargetType = mit['target']
-            if(sec < mit['duration'] + startingSecond) console.log(mit, sec)
-          }
-        }
-        if('shields' in ability) {
-          for(const shield of ability['shields']) {
-            const buffTargetType = shield['target']
-            if(sec < shield['duration'] + startingSecond) console.log(shield, sec)
-          }
-        }
-      }
-
+    let maxEffect = 0
+    const buffArray = combineBuffs(ability['heals'], ability['mits'], ability['shields'])
+    for(const buff of buffArray) {
+      if(buff['duration'] > maxEffect) maxEffect = buff['duration']
     }
-    
-
+    // so we only have to iterate through the seconds once even with multiple buff timers
+    const effectedSeconds = Array.from({length: maxEffect}, (_, i) => i + startingSecond);
+    for(let sec of effectedSeconds) {
+      result[sec-1] = {}
+      if (isToggledOn) {
+        buildResultByBuffType('heals', ability, sec, startingSecond, caster, name, result, targets);
+        buildResultByBuffType('mits', ability, sec, startingSecond, caster, name, result, targets);
+        buildResultByBuffType('shields', ability, sec, startingSecond, caster, name, result, targets);
+      }
+      else {
+        
+      }
+    }
 
     onChange(caster, ability, startingSecond, isToggledOn, targets);
   }
