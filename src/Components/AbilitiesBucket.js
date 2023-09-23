@@ -144,10 +144,10 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
         if('heals' in ability) {
           for(const heal of ability['heals']) {
             const buffTargetType = heal['target']
+            const buffTargets = []
             if(sec < heal['duration'] + startingSecond) {
-              console.log(heal, sec)
               if(buffTargetType === 'self') {
-
+                result[sec][caster]
               }
               if(buffTargetType === 'single') {
 

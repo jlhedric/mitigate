@@ -1,7 +1,7 @@
 const JOBS = {
   "pld":[],
   "war":[],
-  "drk":['nascent flash'],
+  "drk":['sentinel','nascent flash'],
   "gnb":[],
   "whm":[],
   "ast":[],
@@ -31,7 +31,7 @@ const test_cases = {
     }],
     'recast': 4,
     'duration': 2,   //NEW
-    'target': 'self' //NEW
+    'target': 'all' //NEW
   },
   'bulwark': {
     'mits': [{
