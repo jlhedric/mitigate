@@ -7,6 +7,7 @@ const Health = ({id, partyHp}) => {
   const partyListItems = players.map(player => <li key={`second-${id}-${player}`}> Second {id+1} {player} HP: {partyHp[player]}</li>)
     return (
       <span>
+        HP at sec {id+1}:
         <ul>{partyListItems}</ul>
         <Values id={id}></Values>
       </span>

@@ -117,7 +117,8 @@ const Timeline = () => {
     }
   }
 
-  const handleAbilityToggle = (e) => {
+  // an ability has been selected or deselected
+  const handleAbilityToggle = (caster, isToggledOn, newAbilityObj) => {
     console.log('beep')
     // const index = Number(e.target.id)
     // const abilityFormInput = Object.fromEntries(new FormData(e.target).entries())

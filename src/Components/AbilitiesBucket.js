@@ -24,7 +24,7 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
   
   const [abilitiesStatus, setAbilitiesStatus] = useState(initialState)
 
-  const handleAbilityToggle = (caster, name, metaData, startingSecond, isToggledOn, targets) => {
+  const handleAbilityToggle = (caster, abilityName, startingSecond, isToggledOn, targets) => {
     // flatten out the buffs an ability gives
     const combineBuffs = (...arrays) => [].concat(...arrays.filter(Array.isArray));
 
@@ -49,23 +49,16 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
       return buffTargets
     }
 
-    const buildResultByBuffType = (buffType, ability, currSecond, startingSecond, caster, abilityName, result, targets) => {
+    const buildResultByBuffType = (buffType, ability, startingSecond, currSecond, result) => {
       /**
        * Builds a result object with the buffs of a specific type.
        *
        * @param {string} buffType - The type of buffs to process. The types are: heals, mits, shields.
        * @param {Object} ability - The ability object containing the buff information.
-       * @param {number} currSecond - The current second of THE FIGHT.
        * @param {number} startingSecond - The starting second of the ability's effects.
-       * @param {string} caster - The caster of the ability.
-       * @param {string} abilityName - The name of the ability.
+       * @param {number} currSecond - The current second of THE FIGHT.
        * @param {Object} result - The result object to update with the processed buffs.
-       * @param {Object} targets - The user-selected target(s) for the ability. Currently, this is only ever 0, 1, or 2 players.
        */
-      const commonAbilityAttrs = {
-        'castSecond': startingSecond-1, // is this needed?
-        'castBy': caster
-      }
       if (buffType in ability) {
         for (const buff of ability[buffType]) {
           if (currSecond < buff['duration'] + startingSecond) {
@@ -79,7 +72,11 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
                 }
               } else {
                 result[currSecond - 1][target] = {
-                  [abilityName]: { ...commonAbilityAttrs, [buffType]: [buff] },
+                  [abilityName]: {
+                    'castSecond': startingSecond-1, // is this needed?
+                    'castBy': caster,
+                    [buffType]: [buff]
+                  },
                 };
               }
             }
@@ -88,23 +85,23 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
       }
     }
 
-    const ability = test_cases[name]
+    const ability = test_cases[abilityName]
     let effectEndsAt = startingSecond 
     if ('mits' in ability && ability['mits'].length) {
       effectEndsAt = startingSecond + ability['duration']
     }
-    const hasStacks = 'stacks' in test_cases[name]
-    const offCooldownAt = startingSecond + test_cases[name]['recast'];
+    const hasStacks = 'stacks' in test_cases[abilityName]
+    const offCooldownAt = startingSecond + test_cases[abilityName]['recast'];
 
     // status prio: invalid > casted > active > ready > stacksAvail = cooldown
     setAbilitiesStatus((prevState) => {
       let changes = {}
       for(let sec = startingSecond-1; sec+1 <= ((offCooldownAt <= fightDuration) ? offCooldownAt : fightDuration); sec++) {
-        const prevStatus = prevState[sec][caster][name]['status'];
+        const prevStatus = prevState[sec][caster][abilityName]['status'];
         let numStacks = 1
         if(isToggledOn) {
           if (hasStacks) {
-            numStacks = prevState[sec][caster][name]['stacks']['currStacks'] - 1
+            numStacks = prevState[sec][caster][abilityName]['stacks']['currStacks'] - 1
           }
           // set to stacksAvail or cooldown if not an active cast
           if(sec+1 < offCooldownAt) {
@@ -113,9 +110,9 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
                 ...prevState[sec],
                 [caster]: {
                   ...prevState[sec][caster],
-                  [name]: {
+                  [abilityName]: {
                     'stacks': {
-                      ...prevState[sec][caster][name]['stacks'],
+                      ...prevState[sec][caster][abilityName]['stacks'],
                       'currStacks': numStacks
                     },
                     'status': (prevStatus === 'casted' || prevStatus === 'active') ? prevStatus : (numStacks > 0 && hasStacks) ? 'stacksAvail' : 'cooldown'}
@@ -130,9 +127,9 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
                 ...prevState[sec],
                 [caster]: {
                   ...prevState[sec][caster],
-                  [name]: {
+                  [abilityName]: {
                     'stacks': {
-                      ...prevState[sec][caster][name]['stacks'],
+                      ...prevState[sec][caster][abilityName]['stacks'],
                       'currStacks': numStacks
                     },
                     'status': (prevStatus === 'casted') ? prevStatus : (!hasStacks) ? 'active' : (numStacks > 0 && hasStacks) ? 'stacksAvail' : 'cooldown'}
@@ -147,9 +144,9 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
                 ...prevState[sec],
                 [caster]: {
                   ...prevState[sec][caster],
-                  [name]: {
+                  [abilityName]: {
                     'stacks': {
-                      ...prevState[sec][caster][name]['stacks'],
+                      ...prevState[sec][caster][abilityName]['stacks'],
                       'currStacks': numStacks
                     },
                     'status': 'casted'}
@@ -160,7 +157,7 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
         }
         else {
           if (hasStacks) {
-            numStacks = Math.min(prevState[sec][caster][name]['stacks']['currStacks'] + 1, prevState[sec][caster][name]['stacks']['maxStacks'])
+            numStacks = Math.min(prevState[sec][caster][abilityName]['stacks']['currStacks'] + 1, prevState[sec][caster][abilityName]['stacks']['maxStacks'])
           }
           const isSeparateCast = (prevStatus === 'casted' && sec+1 !== startingSecond)
           if(sec+1 < offCooldownAt) {
@@ -169,12 +166,12 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
                 ...prevState[sec],
                 [caster]: {
                   ...prevState[sec][caster],
-                  [name]: {
+                  [abilityName]: {
                     'stacks': {
-                      ...prevState[sec][caster][name]['stacks'],
+                      ...prevState[sec][caster][abilityName]['stacks'],
                       'currStacks': numStacks
                     },
-                    'status': (isSeparateCast) ? prevStatus : (numStacks < prevState[sec][caster][name]['stacks']['maxStacks'] && hasStacks) ? 'stacksAvail' : 'ready'}
+                    'status': (isSeparateCast) ? prevStatus : (numStacks < prevState[sec][caster][abilityName]['stacks']['maxStacks'] && hasStacks) ? 'stacksAvail' : 'ready'}
                 }
               }
             }
@@ -192,22 +189,32 @@ const AbilitiesBucket = ({ fightDuration, partyAttributes, onChange}) => {
     const buffArray = combineBuffs(ability['heals'], ability['mits'], ability['shields'])
     for(const buff of buffArray) {
       if(buff['duration'] > maxEffect) maxEffect = buff['duration']
+      if(maxEffect + startingSecond > fightDuration) {
+        maxEffect = fightDuration - startingSecond + 1;
+        break;
+      }
     }
+    maxEffect = Math.min(maxEffect, fightDuration)
     // so we only have to iterate through the seconds once even with multiple buff timers
     const effectedSeconds = Array.from({length: maxEffect}, (_, i) => i + startingSecond);
     for(let sec of effectedSeconds) {
       result[sec-1] = {}
-      if (isToggledOn) {
-        buildResultByBuffType('heals', ability, sec, startingSecond, caster, name, result, targets);
-        buildResultByBuffType('mits', ability, sec, startingSecond, caster, name, result, targets);
-        buildResultByBuffType('shields', ability, sec, startingSecond, caster, name, result, targets);
+      if(isToggledOn) {
+        buildResultByBuffType('heals', ability, startingSecond, sec, result);
+        buildResultByBuffType('mits', ability, startingSecond, sec, result);
+        buildResultByBuffType('shields', ability, startingSecond, sec, result);
       }
       else {
-        
+        // hack: cannot get target info upon deselection so just remove it from 'everyone'
+        players.map((player) =>(result[sec-1][player] = {
+          [abilityName]: {
+            'castSecond': startingSecond-1,
+            'castBy': caster
+          }
+        }));
       }
     }
-
-    onChange(caster, ability, startingSecond, isToggledOn, targets);
+    onChange(caster, isToggledOn, result);
   }
 
   const addressErrors = () => {}

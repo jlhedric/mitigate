@@ -14,7 +14,7 @@ const Ability = ({second, metaData, partyAttributes, caster, name, targetType, a
 
   const handleChange = (_, targets=[]) => {
     setChecked(!checked);
-    abilityToggle(caster, name, metaData, second, !checked, targets)
+    abilityToggle(caster, name, second, !checked, targets)
   };
 
   const handleSubmit = (e) => {
