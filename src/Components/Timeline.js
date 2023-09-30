@@ -127,14 +127,14 @@ const Timeline = () => {
 
   // an ability has been selected or deselected
   const handleAbilityToggle = (caster, isToggledOn, newAbilityObj) => {
-    if(isToggledOn) {
-      setFightState(prevState => {
-        let updatedState = {
-          ...prevState,
-          abilitiesCollection: {
-            ...prevState.abilitiesCollection
-          }
+    setFightState(prevState => {
+      let updatedState = {
+        ...prevState,
+        abilitiesCollection: {
+          ...prevState.abilitiesCollection
         }
+      }
+      if(isToggledOn) {
         for(const sec in newAbilityObj) {
           updatedState.abilitiesCollection[sec] = {...prevState.abilitiesCollection[sec]}
           for(const player in newAbilityObj[sec]) {
@@ -144,9 +144,16 @@ const Timeline = () => {
             }
           }
         }
-        return updatedState
-      })
-    }
+      }
+      else {
+        for(const sec in newAbilityObj) {
+          for(const player in newAbilityObj[sec]) {
+            delete updatedState.abilitiesCollection[sec][player][Object.keys(newAbilityObj[sec][player])[0]]
+          }
+        }
+      }
+      return updatedState
+    })
   }
 
   const childrenAmount = Array(fightState['fightDuration']).fill(1)
