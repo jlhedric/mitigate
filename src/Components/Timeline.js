@@ -11,7 +11,7 @@ const tempSecondDefaultAttack = { 'name': 'demoAttack2', 'amount': 3, 'type': 'p
 const tempDefaultHpJson = { 'Player1': 1500, 'Player2': 10, 'Player3': 10, 'Player4': 10, 'Player5': 10, 'Player6': 10, 'Player7': 10, 'Player8': 10 }
 const tempDefaultDamageJson = { 'Player1': [tempDefaultAttack, tempSecondDefaultAttack], 'Player2': [tempDefaultAttack], 'Player3': [tempSecondDefaultAttack], 'Player4': [], 'Player5': [], 'Player6': [], 'Player7': [], 'Player8': [] }
 
-const tempDefaultAbilities = { 'Player1': [], 'Player2': [], 'Player3': [], 'Player4': [], 'Player5': [], 'Player6': [], 'Player7': [], 'Player8': [] }
+const tempDefaultAbilities = { 'Player1': {'test': {}}, 'Player2': {}, 'Player3': {}, 'Player4': {}, 'Player5': {}, 'Player6': {}, 'Player7': {}, 'Player8': {} }
 // need to send the caster and ability name
 
 const Timeline = () => {
@@ -27,7 +27,7 @@ const Timeline = () => {
       6: tempDefaultHpJson,
       7: tempDefaultHpJson,
       8: tempDefaultHpJson,
-      9: tempDefaultHpJson,
+      9: tempDefaultHpJson
     },
     'damageCollection': {
       0: tempDefaultDamageJson,
@@ -39,12 +39,20 @@ const Timeline = () => {
       6: tempDefaultDamageJson,
       7: tempDefaultDamageJson,
       8: tempDefaultDamageJson,
-      9: tempDefaultDamageJson,
+      9: tempDefaultDamageJson
     },
     'abilitiesCollection': {
       0: tempDefaultAbilities,
       1: tempDefaultAbilities,
-      2: tempDefaultAbilities
+      2: tempDefaultAbilities,
+      3: tempDefaultAbilities,
+      3: tempDefaultAbilities,
+      4: tempDefaultAbilities,
+      5: tempDefaultAbilities,
+      6: tempDefaultAbilities,
+      7: tempDefaultAbilities,
+      8: tempDefaultAbilities,
+      9: tempDefaultAbilities
     },
     'partyAttributes': {
       'Player1': { 'job': 'drk', 'abilities': JOBS['drk'], 'lvl': 90, 'maxhp': 1500, 'physDef': 0, 'magicDef': 0, 'det': 0, 'tenacity': 0, 'mind': 0, 'healMagPotency': 0 },
@@ -69,7 +77,7 @@ const Timeline = () => {
       for (let i = 0; i < duration; i++) {
         hpCollection[i] = tempDefaultHpJson
         damageCollection[i] = tempDefaultDamageJson
-        abilitiesCollection[i] = { 'Player1': [], 'Player2': [], 'Player3': [], 'Player4': [], 'Player5': [], 'Player6': [], 'Player7': [], 'Player8': [] }
+        abilitiesCollection[i] = { 'Player1': {'test': {}}, 'Player2': {}, 'Player3': {}, 'Player4': {}, 'Player5': {}, 'Player6': {}, 'Player7': {}, 'Player8': {} }
       }
       setFightState((prevState) => ({ 'fightDuration': duration, 'hpCollection': hpCollection, 'damageCollection': damageCollection, 'abilitiesCollection': abilitiesCollection, 'partyAttributes': prevState.partyAttributes }))
     }
@@ -119,29 +127,26 @@ const Timeline = () => {
 
   // an ability has been selected or deselected
   const handleAbilityToggle = (caster, isToggledOn, newAbilityObj) => {
-    console.log('beep')
-    // const index = Number(e.target.id)
-    // const abilityFormInput = Object.fromEntries(new FormData(e.target).entries())
-    //   const newAbilityObj = {
-    //   }
-
-
-    // setFightState(prevState => ({
-    //   ...prevState,
-    //   abilitiesCollection: {
-    //     ...prevState.abilitiesCollection,
-    //     [index]: {
-    //       'Player1': abilityFormInput.Player1 ? [...prevState.abilitiesCollection[index].Player1, newAbilityObj] : [...prevState.abilitiesCollection[index].Player1],
-    //       'Player2': abilityFormInput.Player2 ? [...prevState.abilitiesCollection[index].Player2, newAbilityObj] : [...prevState.abilitiesCollection[index].Player2],
-    //       'Player3': abilityFormInput.Player3 ? [...prevState.abilitiesCollection[index].Player3, newAbilityObj] : [...prevState.abilitiesCollection[index].Player3],
-    //       'Player4': abilityFormInput.Player4 ? [...prevState.abilitiesCollection[index].Player4, newAbilityObj] : [...prevState.abilitiesCollection[index].Player4],
-    //       'Player5': abilityFormInput.Player5 ? [...prevState.abilitiesCollection[index].Player5, newAbilityObj] : [...prevState.abilitiesCollection[index].Player5],
-    //       'Player6': abilityFormInput.Player6 ? [...prevState.abilitiesCollection[index].Player6, newAbilityObj] : [...prevState.abilitiesCollection[index].Player6],
-    //       'Player7': abilityFormInput.Player7 ? [...prevState.abilitiesCollection[index].Player7, newAbilityObj] : [...prevState.abilitiesCollection[index].Player7],
-    //       'Player8': abilityFormInput.Player8 ? [...prevState.abilitiesCollection[index].Player8, newAbilityObj] : [...prevState.abilitiesCollection[index].Player8],
-    //     }
-    //   }
-    // }))
+    if(isToggledOn) {
+      setFightState(prevState => {
+        let updatedState = {
+          ...prevState,
+          abilitiesCollection: {
+            ...prevState.abilitiesCollection
+          }
+        }
+        for(const sec in newAbilityObj) {
+          updatedState.abilitiesCollection[sec] = {...prevState.abilitiesCollection[sec]}
+          for(const player in newAbilityObj[sec]) {
+            updatedState.abilitiesCollection[sec][player] = {
+              ...prevState.abilitiesCollection[sec][player],
+              ...newAbilityObj[sec][player]
+            }
+          }
+        }
+        return updatedState
+      })
+    }
   }
 
   const childrenAmount = Array(fightState['fightDuration']).fill(1)
